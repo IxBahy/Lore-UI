@@ -16,7 +16,7 @@ const Navbar = () => {
 					<Link href={"#"} className="font-bold text-teal-700">
 						Home
 					</Link>
-					<Link href={"#"}>About Us</Link>
+					<Link href={"/about"}>About Us</Link>
 					<Link href={"#"} className="flex-auto">
 						Join Book Club
 					</Link>
