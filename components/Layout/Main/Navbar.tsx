@@ -13,10 +13,10 @@ const Navbar = () => {
 					<div>Lore</div>
 				</div>
 				<div className="flex gap-5 justify-between self-stretch my-auto text-neutral-800 max-md:flex-wrap max-md:max-w-full">
-					<Link href={"#"} className="font-bold text-teal-700">
+					<Link href={"/"} className="font-bold text-teal-700">
 						Home
 					</Link>
-					<Link href={"#"}>About Us</Link>
+					<Link href={"/about"}>About Us</Link>
 					<Link href={"#"} className="flex-auto">
 						Join Book Club
 					</Link>

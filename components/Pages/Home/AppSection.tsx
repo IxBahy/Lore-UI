@@ -31,7 +31,7 @@ const AppSection = () => {
 					Download App
 				</Link>
 				<Link
-					href={"#"}
+					href={"/about"}
 					className="grow justify-center px-10 py-5 rounded-md border border-black border-solid text-neutral-800 max-md:px-5"
 				>
 					About Us

@@ -13,12 +13,12 @@ const PopularClubs = () => {
 					Join Clubs
 				</h2>
 				<div className="flex gap-5 justify-between self-center px-6 py-3 mt-16 max-w-full whitespace-nowrap rounded-xl border border-solid border-[color:var(--gray-01,#A7A7A9)] leading-[120%] w-[1098px] max-md:flex-wrap max-md:pl-5 max-md:mt-10">
-					<div className="flex gap-2 justify-center my-auto text-base">
-						<div className="font-medium text-neutral-800">23.000+</div>
-						<div className="grow text-neutral-400">book club you can join</div>
-					</div>
+					<input
+						className="flex gap-2 justify-center text-base w-full h-14 px-5 py-3 font-semibold leading-6 text-neutral-800 rounded-md bg-transparent max-md:gap-1.5 max-md:px-3 max-md:py-2.5 max-md:text-sm max-md:leading-5 max-md:rounded-xl max-md:h-12 max-md:mt-10 max-md:pl-5 max-md:pr-3 max-md:py-3 max-md:w-full max-md:mt-10"
+						placeholder="book club you can join 23.000+"
+					/>
 					<Link
-						href={"#"}
+						href={"/club"}
 						className="justify-center px-16 py-3 text-xl font-semibold text-white rounded-md bg-stone-900 max-md:px-5"
 					>
 						Explore Now
@@ -68,7 +68,7 @@ const PopularClubs = () => {
 				</div>
 
 				<div className="flex gap-2 justify-center self-center px-10 py-5 mt-12 mb-5 text-xl font-semibold leading-6 text-white whitespace-nowrap rounded-md bg-neutral-800 max-md:px-5 max-md:mt-10">
-					<Link href={"#"} className="grow">
+					<Link href={"/club"} className="grow">
 						Browse all Clubs
 					</Link>
 					<img

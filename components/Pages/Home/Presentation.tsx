@@ -20,8 +20,8 @@ const Presentation = () => {
 							the joy of reading is magnified when shared with friends.
 						</div>
 						<div className="flex gap-4 justify-between mt-10 font-semibold leading-[120%] max-md:flex-wrap max-md:max-w-full">
-							<div className="flex gap-2 justify-between px-14 pt-5 pb-2 text-white bg-teal-700 rounded-md max-md:px-5">
-								<Link href={"#"} className="flex-auto">
+							<div className="flex gap-2 justify-between px-14 py-5  text-white bg-teal-700 rounded-md max-md:px-5">
+								<Link href={"#"} className="flex-auto text-center ">
 									Start The Club
 								</Link>
 								<img
@@ -31,8 +31,8 @@ const Presentation = () => {
 								/>
 							</div>
 							<Link
-								href={"#"}
-								className="grow justify-center px-10 pt-5 pb-2 rounded-md border border-solid border-[color:var(--black-03,#252525)] text-neutral-800 max-md:px-5"
+								href={"/club"}
+								className="grow justify-center text-center  px-10 py-5 rounded-md border border-solid border-[color:var(--black-03,#252525)] text-neutral-800 max-md:px-5"
 							>
 								Join clubs
 							</Link>
