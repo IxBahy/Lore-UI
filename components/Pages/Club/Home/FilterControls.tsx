@@ -2,7 +2,7 @@ import React from "react";
 // to-do: Add the filter controls for the club home page
 const FilterControls = () => {
 	return (
-		<div className="flex gap-5 justify-between mt-16 w-[95%] bg-transparent  flex-wrap">
+		<div className="flex mx-8 gap-5 justify-between mt-16 w-[95%] bg-transparent  flex-wrap">
 			<FilterChip count={3} label="Filter" />
 			<CategoryCard
 				icon="https://cdn.builder.io/api/v1/image/assets/TEMP/47ddaac5b694cdae8ee3c3200441d4ca04a8e0a569a2a46612177232b19561f5?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"

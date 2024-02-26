@@ -17,7 +17,7 @@ const Navbar = () => {
 						Home
 					</Link>
 					<Link href={"/about"}>About Us</Link>
-					<Link href={"#"} className="flex-auto">
+					<Link href={"/club"} className="flex-auto">
 						Join Book Club
 					</Link>
 					<Link href={"#"} className="flex-auto">

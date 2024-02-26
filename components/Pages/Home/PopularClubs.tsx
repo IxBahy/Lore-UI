@@ -1,6 +1,51 @@
 import Card from "@/components/ui/Card";
 import Link from "next/link";
-
+const clubData = [
+	{
+		imageSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/d4cb8502fdbf66e0db0be5cd2dbed94d170c52be56592f8b31608a621fc1eead?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		imageAlt: "Past Perspectives Society",
+		title: "Past Perspectives Society",
+		description:
+			"Embark on a captivating journey through time with the Past Perspectives Society, where history comes alive through engaging discussions.",
+		joinIconSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/11d86b516dda64d74867508485cc62235188d953f6b56913e3a36ab7a4176d8b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		joinIconAlt: "Join club icon",
+	},
+	{
+		imageSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/8bab3aa4e07f71afa97e3634610c80c839703734016c58b34413ae69bc782643?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		imageAlt: "Ancient Chronicles Book Club",
+		title: "Ancient Chronicles Book Club",
+		description:
+			"Journey through time with the Ancient Chronicles Book Club, where each page turns into a portal to the past. Join our community of history enthusiasts",
+		joinIconSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/11d86b516dda64d74867508485cc62235188d953f6b56913e3a36ab7a4176d8b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		joinIconAlt: "Join club icon",
+	},
+	{
+		imageSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/1bd85a80393010ad6d1348e661ba8190813ae01eef2f21267f3066edb5958e25?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		imageAlt: "ArchaeoReads Society",
+		title: "ArchaeoReads Society",
+		description:
+			"Dive into the fascinating world of ArchaeoReads Society, where the pages of history are unearthed through captivating narratives.",
+		joinIconSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/7db23a090460a9ad7b5a4066197aae8aa4a9cd0528ad9bd0fa95adf366d42714?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		joinIconAlt: "Join club icon",
+	},
+	{
+		imageSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/8a0103155ae18a50b9e6c3e382e4ab378a76c52739118acb1efce0f3222931fe?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		imageAlt: "Artifacts Adventures Club",
+		title: "Artifacts Adventures Club",
+		description:
+			"Embark on a literary expedition with Artifacts Adventures Club, where every book is an artifact waiting to be discovered.",
+		joinIconSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/7db23a090460a9ad7b5a4066197aae8aa4a9cd0528ad9bd0fa95adf366d42714?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		joinIconAlt: "Join club icon",
+	},
+];
 const PopularClubs = () => {
 	return (
 		<>
@@ -24,47 +69,14 @@ const PopularClubs = () => {
 						Explore Now
 					</Link>
 				</div>
-				<div className="self-center mt-12 w-full max-w-[1302px] max-md:pr-5 max-md:mt-10 max-md:max-w-full">
-					<div className="flex gap-5 max-md:flex-col max-md:gap-0 max-md:">
-						<Card
-							img={
-								"https://cdn.builder.io/api/v1/image/assets/TEMP/54b0837b9f547b9e86d49cdd6303c75581032f9c61de9c16d8d451187d738dc3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/54b0837b9f547b9e86d49cdd6303c75581032f9c61de9c16d8d451187d738dc3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/54b0837b9f547b9e86d49cdd6303c75581032f9c61de9c16d8d451187d738dc3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/54b0837b9f547b9e86d49cdd6303c75581032f9c61de9c16d8d451187d738dc3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/54b0837b9f547b9e86d49cdd6303c75581032f9c61de9c16d8d451187d738dc3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/54b0837b9f547b9e86d49cdd6303c75581032f9c61de9c16d8d451187d738dc3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/54b0837b9f547b9e86d49cdd6303c75581032f9c61de9c16d8d451187d738dc3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/54b0837b9f547b9e86d49cdd6303c75581032f9c61de9c16d8d451187d738dc3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							}
-							desc={
-								"Dive into the depths of thought and join our Philosophical Ponderings Club, where minds converge to explore profound questions."
-							}
-							link={"#"}
-						/>
-						<Card
-							desc={`Embark on a captivating journey through time with the Past
-                Perspectives Society, where history comes alive through
-                engaging discussions.`}
-							img={
-								"https://cdn.builder.io/api/v1/image/assets/TEMP/35aa5112e379ab583c11bfdb89588d9c28fca84bd258cf229b09080e50baa14d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/35aa5112e379ab583c11bfdb89588d9c28fca84bd258cf229b09080e50baa14d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/35aa5112e379ab583c11bfdb89588d9c28fca84bd258cf229b09080e50baa14d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/35aa5112e379ab583c11bfdb89588d9c28fca84bd258cf229b09080e50baa14d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/35aa5112e379ab583c11bfdb89588d9c28fca84bd258cf229b09080e50baa14d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/35aa5112e379ab583c11bfdb89588d9c28fca84bd258cf229b09080e50baa14d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/35aa5112e379ab583c11bfdb89588d9c28fca84bd258cf229b09080e50baa14d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/35aa5112e379ab583c11bfdb89588d9c28fca84bd258cf229b09080e50baa14d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							}
-							link={"#"}
-						/>
-
-						<Card
-							img={
-								"https://cdn.builder.io/api/v1/image/assets/TEMP/531a95028521789c0f8de48851afad178c237ddd93fca90ba51095d11ebd310b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/531a95028521789c0f8de48851afad178c237ddd93fca90ba51095d11ebd310b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/531a95028521789c0f8de48851afad178c237ddd93fca90ba51095d11ebd310b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/531a95028521789c0f8de48851afad178c237ddd93fca90ba51095d11ebd310b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/531a95028521789c0f8de48851afad178c237ddd93fca90ba51095d11ebd310b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/531a95028521789c0f8de48851afad178c237ddd93fca90ba51095d11ebd310b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/531a95028521789c0f8de48851afad178c237ddd93fca90ba51095d11ebd310b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/531a95028521789c0f8de48851afad178c237ddd93fca90ba51095d11ebd310b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							}
-							desc={`Embark on a thrilling expedition of knowledge with The
-                Science Safari club, where curiosity leads the way, and
-                every meeting is a captivating exploration.`}
-							link={"#"}
-						/>
-
-						<Card
-							img={
-								"https://cdn.builder.io/api/v1/image/assets/TEMP/739760f041a72fe1c9327be2bfe911a002a0035ab7a7bd8518c4e05a9189eb8d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/739760f041a72fe1c9327be2bfe911a002a0035ab7a7bd8518c4e05a9189eb8d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/739760f041a72fe1c9327be2bfe911a002a0035ab7a7bd8518c4e05a9189eb8d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/739760f041a72fe1c9327be2bfe911a002a0035ab7a7bd8518c4e05a9189eb8d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/739760f041a72fe1c9327be2bfe911a002a0035ab7a7bd8518c4e05a9189eb8d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/739760f041a72fe1c9327be2bfe911a002a0035ab7a7bd8518c4e05a9189eb8d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/739760f041a72fe1c9327be2bfe911a002a0035ab7a7bd8518c4e05a9189eb8d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/739760f041a72fe1c9327be2bfe911a002a0035ab7a7bd8518c4e05a9189eb8d?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							}
-							desc={`Unlock the secrets of programming and venture into the
-                digital realm with Code Chronicles Circle club, where coding
-                enthusiasts converge to share.`}
-							link={"#"}
-						/>
-					</div>
+				<div className="self-center mt-12 w-full max-md:pr-5 max-md:mt-10 max-md:max-w-full">
+					<section className="flex mx-16 mt-8 gap-5 ">
+						{clubData.map((club, index) => (
+							<div key={index} className="flex-grow w-full md:w-full lg:w-3/12">
+								<Card {...club} />
+							</div>
+						))}
+					</section>
 				</div>
 
 				<div className="flex gap-2 justify-center self-center px-10 py-5 mt-12 mb-5 text-xl font-semibold leading-6 text-white whitespace-nowrap rounded-md bg-neutral-800 max-md:px-5 max-md:mt-10">
