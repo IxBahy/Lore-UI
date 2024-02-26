@@ -49,7 +49,7 @@ const page = () => {
 			<FilterControls />
 			<div className="grid grid-cols-6 ">
 				<section className="columns-1 col-span-1 border  mt-16 ms-8">
-					<Accordion type="multiple" collapsible className=" ">
+					<Accordion type="multiple" className=" ">
 						<AccordionItem value="gener">
 							<AccordionTrigger className="mx-4 text-md font-bold">
 								GENER
