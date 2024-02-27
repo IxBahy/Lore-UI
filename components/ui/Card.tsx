@@ -29,14 +29,17 @@ const Card = ({
 				/>
 				<span>Students</span>
 			</div>
-			<button className="flex gap-1 items-center px-5 py-1.5 text-xl font-bold text-teal-700 whitespace-nowrap rounded-md bg-teal-700 bg-opacity-10 border border-[color:var(--green-04,#297373)]">
+			<Link
+				href={"/club/1"}
+				className="flex gap-1 items-center px-5 py-1.5 text-xl font-bold text-teal-700 whitespace-nowrap rounded-md bg-teal-700 bg-opacity-10 border border-[color:var(--green-04,#297373)]"
+			>
 				<span>Join</span>
 				<img
 					src={joinIconSrc}
 					alt={joinIconAlt}
 					className="aspect-[1.04] w-[25px]"
 				/>
-			</button>
+			</Link>
 		</div>
 	</div>
 );
