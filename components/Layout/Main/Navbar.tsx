@@ -1,12 +1,15 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import path from "path";
 import { useState } from "react";
 
 const Navbar = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
-	const pathName = usePathname().split("/") ?? undefined;
-	const lastNameInPath = pathName.pop();
+	const pathName = usePathname().slice(1).split("/");
+	const lastNameInPath = pathName.length > 0 ? pathName.pop() : pathName;
+	console.log(pathName);
+
 	return (
 		<div className="flex justify-center items-center px-16 py-7 w-full text-xl font-semibold leading-6 bg-white shadow-sm max-md:px-5 max-md:max-w-full">
 			<div className="flex gap-5 justify-between items-center w-full max-w-[1264px] max-md:flex-wrap max-md:max-w-full">
@@ -19,35 +22,61 @@ const Navbar = () => {
 					<div>Lore</div>
 				</div>
 				<div className="flex gap-5 justify-between self-stretch my-auto text-neutral-800 max-md:flex-wrap max-md:max-w-full">
-					<Link href={"/"} className="font-bold text-teal-700">
+					<Link
+						href={"/"}
+						className={`font-bold ${
+							lastNameInPath === "" ? "text-teal-700" : ""
+						}`}
+					>
 						Home
 					</Link>
-					<Link href={"/about"}>About Us</Link>
+					<Link
+						href={"/about"}
+						className={`font-bold ${
+							lastNameInPath === "about" ? "text-teal-700" : ""
+						}`}
+					>
+						About Us
+					</Link>
 					{isAuthenticated && (
-						<Link href={"/club"} className="flex-auto">
+						<Link
+							href={"/club"}
+							className={`font-bold ${
+								lastNameInPath === "club" ? "text-teal-700" : ""
+							}`}
+						>
 							Join Book Club
 						</Link>
 					)}
 					{isAuthenticated && (
-						<Link href={"/profile/1"} className="flex-auto">
+						<Link
+							href={"/profile/1"}
+							className={`font-bold ${
+								Array.isArray(pathName) && pathName.length > 0
+									? "text-teal-700"
+									: ""
+							}`}
+						>
 							My Clubs
 						</Link>
 					)}
 				</div>
-				<div className="flex gap-2 self-stretch my-auto whitespace-nowrap">
-					<Link
-						href={"#"}
-						className="grow justify-center px-8 py-2.5 rounded-3xl border-2 border-solid border-[color:var(--green-04,#297373)] text-neutral-800 max-md:px-5"
-					>
-						Login
-					</Link>
-					<Link
-						href={"#"}
-						className="grow justify-center px-5 py-2.5 text-white bg-teal-700 rounded-3xl"
-					>
-						Create Account
-					</Link>
-				</div>
+				{!isAuthenticated && (
+					<div className="flex gap-2 self-stretch my-auto whitespace-nowrap">
+						<Link
+							href={"#"}
+							className="grow justify-center px-8 py-2.5 rounded-3xl border-2 border-solid border-[color:var(--green-04,#297373)] text-neutral-800 max-md:px-5"
+						>
+							Login
+						</Link>
+						<Link
+							href={"#"}
+							className="grow justify-center px-5 py-2.5 text-white bg-teal-700 rounded-3xl"
+						>
+							Create Account
+						</Link>
+					</div>
+				)}
 			</div>
 		</div>
 	);
