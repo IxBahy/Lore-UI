@@ -1,6 +1,12 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const Navbar = () => {
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+	const pathName = usePathname().split("/") ?? undefined;
+	const lastNameInPath = pathName.pop();
 	return (
 		<div className="flex justify-center items-center px-16 py-7 w-full text-xl font-semibold leading-6 bg-white shadow-sm max-md:px-5 max-md:max-w-full">
 			<div className="flex gap-5 justify-between items-center w-full max-w-[1264px] max-md:flex-wrap max-md:max-w-full">
@@ -17,12 +23,16 @@ const Navbar = () => {
 						Home
 					</Link>
 					<Link href={"/about"}>About Us</Link>
-					<Link href={"/club"} className="flex-auto">
-						Join Book Club
-					</Link>
-					<Link href={"/profile/1"} className="flex-auto">
-						My Clubs
-					</Link>
+					{isAuthenticated && (
+						<Link href={"/club"} className="flex-auto">
+							Join Book Club
+						</Link>
+					)}
+					{isAuthenticated && (
+						<Link href={"/profile/1"} className="flex-auto">
+							My Clubs
+						</Link>
+					)}
 				</div>
 				<div className="flex gap-2 self-stretch my-auto whitespace-nowrap">
 					<Link

@@ -42,9 +42,11 @@ export function SecondFeature() {
 						<h2 className="text-3xl font-semibold leading-9 text-zinc-700">
 							Progress Tracking
 						</h2>
-						<p className="mt-3 text-base font-medium leading-6 text-teal-700">
-							Here's how Progress Tracking at Lore enhances your reading
-							experience:
+						<div className="mt-3 text-base font-medium leading-6 text-teal-700">
+							<p>
+								Here's how Progress Tracking at Lore enhances your reading
+								experience:
+							</p>
 							<ol className="mt-3">
 								{progressDetails.map((detail, index) => (
 									<ProgressDetail
@@ -54,7 +56,7 @@ export function SecondFeature() {
 									/>
 								))}
 							</ol>
-						</p>
+						</div>
 					</div>
 				</div>
 			</div>

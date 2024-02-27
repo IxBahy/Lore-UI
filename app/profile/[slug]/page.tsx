@@ -37,6 +37,17 @@ const clubData = [
 			"https://cdn.builder.io/api/v1/image/assets/TEMP/7db23a090460a9ad7b5a4066197aae8aa4a9cd0528ad9bd0fa95adf366d42714?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
 		joinIconAlt: "Join club icon",
 	},
+	{
+		imageSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/1bd85a80393010ad6d1348e661ba8190813ae01eef2f21267f3066edb5958e25?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		imageAlt: "ArchaeoReads Society",
+		title: "ArchaeoReads Society",
+		description:
+			"Dive into the fascinating world of ArchaeoReads Society, where the pages of history are unearthed through captivating narratives.",
+		joinIconSrc:
+			"https://cdn.builder.io/api/v1/image/assets/TEMP/7db23a090460a9ad7b5a4066197aae8aa4a9cd0528ad9bd0fa95adf366d42714?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
+		joinIconAlt: "Join club icon",
+	},
 ];
 const page = () => {
 	return (
@@ -46,8 +57,7 @@ const page = () => {
 					Clubs You have joined
 				</h2>
 				<SectionHeader />
-				{/* Club Section */}
-				<div className=" mx-16 my-8 gap-5 grid grid-cols-3 grid-rows-1">
+				<div className=" mx-16 my-8 gap-5 grid grid-cols-4 grid-rows-1">
 					{clubData.map((club, index) => (
 						<div key={index} className="columns-1 col-span-1 w-full md:w-full ">
 							<Card {...club} />

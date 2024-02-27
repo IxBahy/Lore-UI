@@ -1,7 +1,11 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const Header = ({ params }: { params: { slug: number } }) => {
+	const pathName = usePathname().split("/");
+	const lastNameInPath = pathName.pop();
 	return (
 		<>
 			<header>
@@ -25,25 +29,41 @@ const Header = ({ params }: { params: { slug: number } }) => {
 					<div className="flex gap-5  max-md:flex-wrap max-md:max-w-full">
 						<Link
 							href={`/profile/${params.slug}/`}
-							className="grow font-semibold text-center py-7 text-teal-700 border-b-4 border-solid border-teal-700"
+							className={`grow text-center py-7 min-w-40   ${
+								pathName.length === 2
+									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700 "
+									: ""
+							}`}
 						>
 							Clubs
 						</Link>
 						<Link
 							href={`/profile/${params.slug}/progress`}
-							className="grow my-auto flex-auto text-center"
+							className={`grow my-auto flex-auto  py-7 min-w-40 text-center ${
+								lastNameInPath === "progress"
+									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700"
+									: ""
+							}`}
 						>
 							Progress
 						</Link>
 						<Link
 							href={`/profile/${params.slug}/completed`}
-							className=" grow my-auto flex-auto text-center"
+							className={` grow my-auto flex-auto py-7 min-w-40 text-center ${
+								lastNameInPath === "completed"
+									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700"
+									: ""
+							}`}
 						>
 							Completed
 						</Link>
 						<Link
 							href={`/profile/${params.slug}/friends`}
-							className="grow my-auto text-zinc-900"
+							className={`grow my-auto flex-auto py-7 min-w-40 text-center ${
+								lastNameInPath === "friends"
+									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700"
+									: ""
+							}`}
 						>
 							Friends
 						</Link>
