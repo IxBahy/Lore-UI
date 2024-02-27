@@ -20,7 +20,7 @@ const Navbar = () => {
 					<Link href={"/club"} className="flex-auto">
 						Join Book Club
 					</Link>
-					<Link href={"#"} className="flex-auto">
+					<Link href={"/profile/1"} className="flex-auto">
 						My Clubs
 					</Link>
 				</div>

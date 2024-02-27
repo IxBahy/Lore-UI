@@ -2,8 +2,8 @@ import React from "react";
 
 // Define reusable component for sections with common structure
 const SectionTitle = ({ title, subtitle }) => (
-	<div className="flex gap-4 justify-center px-5 my-auto">
-		<h2 className="grow text-xl font-semibold text-neutral-800">{title}</h2>
+	<div className="flex gap-4 justify-center items-center px-5 my-auto">
+		<h2 className="grow text-xl font-semibold text-teal-700">{title}</h2>
 		<p className="grow my-auto text-base font-medium text-neutral-500">
 			{subtitle}
 		</p>
@@ -25,7 +25,7 @@ const ViewAllButton = ({ children }) => (
 
 export const SectionHeader = () => {
 	return (
-		<section className="flex gap-5 justify-between mt-16 w-full whitespace-nowrap leading-[120%] max-w-[90%] max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
+		<section className="flex gap-5 justify-between mt-16 w-full mx-auto whitespace-nowrap leading-[120%] max-w-[90%] max-md:flex-wrap max-md:mt-10 max-md:max-w-full">
 			<SectionTitle title="Archaeology" subtitle="(200 Club)" />
 			<ViewAllButton>View All</ViewAllButton>
 		</section>
