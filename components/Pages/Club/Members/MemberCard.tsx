@@ -4,8 +4,15 @@ interface Props {
 	image: string;
 	name: string;
 	email: string;
+	isFriendCard?: boolean;
 }
-const MemberCard = ({ email, id, image, name }: Props) => {
+const MemberCard = ({
+	email,
+	id,
+	image,
+	name,
+	isFriendCard = false,
+}: Props) => {
 	return (
 		<>
 			<div className="flex flex-col grow items-center pb-5 mx-auto w-full font-semibold bg-white  rounded-lg leading-[120%] max-md:mt-7">
@@ -23,18 +30,20 @@ const MemberCard = ({ email, id, image, name }: Props) => {
 					<span className="text-neutral-500">{email}</span>
 				</div>
 				<div className="flex gap-3.5 mt-9 text-xl text-center whitespace-nowrap">
-					<button
-						className="flex gap-2 items-center px-6 justify-between py-3  text-white bg-teal-700 rounded-md "
-						aria-label="Add Friend"
-					>
-						<div className="grow ">Add Friend</div>
-						<img
-							loading="lazy"
-							src="https://cdn.builder.io/api/v1/image/assets/TEMP/1697590af0209260919a9e1c2fc4a10fea0a10aa72a2f99548005318679dca23?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							className="my-auto w-4 aspect-square"
-							alt=""
-						/>
-					</button>
+					{!isFriendCard && (
+						<button
+							className="flex gap-2 items-center px-6 justify-between py-3  text-white bg-teal-700 rounded-md "
+							aria-label="Add Friend"
+						>
+							<div className="grow ">Add Friend</div>
+							<img
+								loading="lazy"
+								src="https://cdn.builder.io/api/v1/image/assets/TEMP/1697590af0209260919a9e1c2fc4a10fea0a10aa72a2f99548005318679dca23?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
+								className="my-auto w-4 aspect-square"
+								alt=""
+							/>
+						</button>
+					)}
 					<button
 						className="flex gap-2 justify-between items-center py-3 px-6 text-teal-700 rounded-md border border-solid border-[color:var(--green-04,#297373)]"
 						aria-label="Message"
