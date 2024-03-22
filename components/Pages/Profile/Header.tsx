@@ -47,16 +47,7 @@ const Header = ({ params }: { params: { slug: number } }) => {
 						>
 							Progress
 						</Link>
-						<Link
-							href={`/profile/${params.slug}/completed`}
-							className={` grow my-auto flex-auto py-7 min-w-40 text-center ${
-								lastNameInPath === "completed"
-									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700"
-									: ""
-							}`}
-						>
-							Completed
-						</Link>
+
 						<Link
 							href={`/profile/${params.slug}/friends`}
 							className={`grow my-auto flex-auto py-7 min-w-40 text-center ${
