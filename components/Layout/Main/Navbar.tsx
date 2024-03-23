@@ -3,12 +3,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import path from "path";
 import { useState } from "react";
-
+import { useAuthStore } from "@/store/zustand";
 const Navbar = () => {
-	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+	const { isAuthenticated } = useAuthStore();
 	const pathName = usePathname().slice(1).split("/");
 	const lastNameInPath = pathName.length > 0 ? pathName.pop() : pathName;
-	console.log(pathName);
 
 	return (
 		<div className="flex justify-center items-center px-16 py-7 w-full text-xl font-semibold leading-6 bg-white shadow-sm max-md:px-5 max-md:max-w-full">
@@ -64,13 +63,13 @@ const Navbar = () => {
 				{!isAuthenticated && (
 					<div className="flex gap-2 self-stretch my-auto whitespace-nowrap">
 						<Link
-							href={"#"}
+							href={"/login"}
 							className="grow justify-center px-8 py-2.5 rounded-3xl border-2 border-solid border-[color:var(--green-04,#297373)] text-neutral-800 max-md:px-5"
 						>
 							Login
 						</Link>
 						<Link
-							href={"#"}
+							href={"/register"}
 							className="grow justify-center px-5 py-2.5 text-white bg-teal-700 rounded-3xl"
 						>
 							Create Account

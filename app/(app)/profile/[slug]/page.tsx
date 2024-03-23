@@ -3,6 +3,7 @@ import { SectionHeader } from "@/components/Pages/Club/Home/SectionHeader";
 import Header from "@/components/Pages/Profile/Header";
 import Card from "@/components/ui/Card";
 import React from "react";
+
 const clubData = [
 	{
 		imageSrc:

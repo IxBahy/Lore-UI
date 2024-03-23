@@ -1,5 +1,7 @@
 import Header from "@/components/Pages/Profile/Header";
+
 import React, { PropsWithChildren } from "react";
+
 interface Props extends PropsWithChildren {
 	params: { slug: number };
 }

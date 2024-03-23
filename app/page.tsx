@@ -1,3 +1,6 @@
+"use client";
+import Footer from "@/components/Layout/Main/Footer";
+import Navbar from "@/components/Layout/Main/Navbar";
 import AppSection from "@/components/Pages/Home/AppSection";
 import Carousel from "@/components/Pages/Home/Carousel";
 import Features from "@/components/Pages/Home/Features";
@@ -9,13 +12,18 @@ import Link from "next/link";
 
 export default function Home() {
 	return (
-		<main className="flex min-h-screen flex-col items-center justify-between ">
-			<Presentation />
-			<Split />
-			<Features />
-			<PopularClubs />
-			<Carousel />
-			<AppSection />
-		</main>
+		<>
+			<Navbar />
+
+			<main className="flex min-h-screen flex-col items-center justify-between ">
+				<Presentation />
+				<Split />
+				<Features />
+				<PopularClubs />
+				<Carousel />
+				<AppSection />
+			</main>
+			<Footer />
+		</>
 	);
 }
