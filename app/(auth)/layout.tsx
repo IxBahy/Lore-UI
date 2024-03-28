@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react";
-
 const layout = ({ children }: PropsWithChildren) => {
 	return (
 		<main className="flex h-screen">

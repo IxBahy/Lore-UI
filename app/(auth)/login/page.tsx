@@ -1,10 +1,31 @@
+"use client";
 import React from "react";
-
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import { login } from "@/apis/auth";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/zustand";
+import { useToast } from "@/components/ui/use-toast";
 interface SocialIconProps {
 	src: string;
 	alt: string;
 }
-
+interface LoginResponseBody {
+	refresh: string;
+	access: string;
+}
 const socialIcons = [
 	{
 		src: "https://cdn.builder.io/api/v1/image/assets/TEMP/81d8a5e0aecb99ae524e91d2ac5d16986ea12e866046f4e022a99041caff2b1f?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
@@ -24,22 +45,89 @@ const socialIcons = [
 	},
 ];
 
+const formSchema = z.object({
+	username: z.string().min(4).max(50),
+	password: z.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/),
+});
 const Login = () => {
+	const { toast } = useToast();
+	const router = useRouter();
+	const { setUserToken } = useAuthStore();
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			username: "",
+			password: "",
+		},
+	});
+
+	// 2. Define a submit handler.
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
+		const res = await login(values);
+		if (res.ok) {
+			const data = (await res.json()) as LoginResponseBody;
+			setUserToken(data?.access);
+			router.push("/");
+		} else {
+			toast({
+				variant: "destructive",
+				title: "Error",
+				description: "Invalid username or password",
+			});
+		}
+	};
+
 	return (
-		<div className="flex flex-col items-center  px-5 max-h-screen max-md:mt-4 max-md:max-w-full">
+		<div className="flex flex-col items-center w-full justify-evenly px-5 max-h-screen max-md:mt-4 max-md:max-w-full">
 			<div className="flex flex-col self-stretch px-5 mt-6 max-md:mt-4 max-md:max-w-full">
 				<h1 className="text-3xl font-semibold leading-9 text-neutral-800 max-md:max-w-full">
-					Create Account
+					Welcome Back
 				</h1>
 
-				<form action="" className="h-[360px]">
-					a sdsa
-				</form>
+				<Form {...form}>
+					<form
+						onSubmit={form.handleSubmit(onSubmit)}
+						className="space-y-8 mt-8"
+					>
+						<FormField
+							control={form.control}
+							name="username"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Username</FormLabel>
+									<FormControl>
+										<Input placeholder="Username" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							control={form.control}
+							name="password"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Password</FormLabel>
+									<FormControl>
+										<Input placeholder="Password" {...field} type="password" />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button
+							className="justify-center w-full items-center px-16 py-5 mt-7 text-2xl font-bold leading-8 text-white bg-teal-700 rounded-md max-md:px-5 max-md:max-w-full"
+							type="submit"
+						>
+							Submit
+						</Button>
+					</form>
+				</Form>
 			</div>
 			<div className="flex gap-4 items-center self-stretch mt-14 text-xl font-medium leading-6 text-neutral-400 max-md:flex-wrap max-md:mt-10">
-				<hr className="shrink-0 self-stretch my-auto h-px bg-gray-200 border border-gray-200 border-solid w-[281px]" />
-				<div className="text-sm w-14">Or Sign Up With</div>
-				<hr className="shrink-0 self-stretch my-auto max-w-full h-px bg-gray-200 border border-gray-200 border-solid w-[281px]" />
+				<hr className="shrink-0 self-stretch my-auto h-px bg-gray-200 border border-gray-200 border-solid w-[44%]" />
+				<div className="text-sm w-14">Or Sign In With</div>
+				<hr className="shrink-0 self-stretch my-auto max-w-full h-px bg-gray-200 border border-gray-200 border-solid w-[44%]" />
 			</div>
 			<div className="flex gap-5 justify-between mt-8 max-w-full w-[413px] max-md:pr-5">
 				{socialIcons.map((icon, index) => (
@@ -47,10 +135,10 @@ const Login = () => {
 				))}
 			</div>
 			<div className="mt-9 text-sm leading-4 underline text-slate-400">
-				<span className="text-neutral-400">Already have an account?</span>{" "}
-				<a href="#" className="font-medium underline text-slate-400">
-					Sign in
-				</a>
+				<span className="text-neutral-400">Don't have an account? </span>{" "}
+				<Link href="/register" className="font-medium underline text-slate-400">
+					Sign Up
+				</Link>
 			</div>
 		</div>
 	);
