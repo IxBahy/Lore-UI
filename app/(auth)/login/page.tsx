@@ -75,6 +75,7 @@ const Login = () => {
 		if (res.ok) {
 			const data = (await res.json()) as LoginResponseBody;
 			localStorage.setItem("access_token", data?.access);
+			localStorage.setItem("refresh_token", data?.refresh);
 			setUserToken(data?.access);
 			setRefreshToken(data?.refresh);
 			setIsAuthenticated(true);

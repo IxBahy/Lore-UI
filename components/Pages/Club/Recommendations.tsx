@@ -1,4 +1,4 @@
-const Recommendations = () => {
+const Recommendations = ({ clubs }: { clubs: Club[] }) => {
 	return (
 		<>
 			{" "}

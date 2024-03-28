@@ -1,4 +1,3 @@
-"use client";
 import Footer from "@/components/Layout/Main/Footer";
 import Navbar from "@/components/Layout/Main/Navbar";
 import AppSection from "@/components/Pages/Home/AppSection";
@@ -7,8 +6,6 @@ import Features from "@/components/Pages/Home/Features";
 import PopularClubs from "@/components/Pages/Home/PopularClubs";
 import Presentation from "@/components/Pages/Home/Presentation";
 import Split from "@/components/Pages/Home/Split";
-import Card from "@/components/ui/Card";
-import Link from "next/link";
 
 export default function Home() {
 	return (

@@ -7,8 +7,6 @@ type registerData = {
 };
 
 export const register = async (data: registerData): Promise<Response> => {
-	console.log(process.env.API_URL + "register");
-
 	const response = await fetch(process.env.API_URL + "register", {
 		method: "POST",
 		headers: {
@@ -31,4 +29,23 @@ export const login = async (data: {
 		body: JSON.stringify(data),
 	});
 	return response;
+};
+
+export const refreshToken = () => {
+	const token = localStorage.getItem("refresh_token");
+
+	if (token) {
+		fetch(process.env.API_URL + "refresh-token", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ refresh: token }),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				localStorage.setItem("access", data.access);
+				localStorage.setItem("refresh", data.refresh);
+			});
+	}
 };

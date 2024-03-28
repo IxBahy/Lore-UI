@@ -1,9 +1,19 @@
+"use client";
 import ClubDetails from "@/components/Pages/Club/About/ClubDetails";
 import ClubInstructor from "@/components/Pages/Club/About/ClubInstructor";
 import ClubRoadmap from "@/components/Pages/Club/About/ClubRoadmap";
 import Recommendations from "@/components/Pages/Club/Recommendations";
+import { use } from "react";
+import { getClubDetails, getClubs } from "@/apis/club";
 
-const page = () => {
+const page = ({ params }: { params: { slug: string } }) => {
+	const { slug } = params;
+	const clubData = use(getClubs());
+	console.log(slug);
+
+	if (!slug || typeof !slug === "string" || Array.isArray(slug)) return;
+
+	const clubDetails = use(getClubDetails(slug));
 	return (
 		<>
 			<div className="flex z-10 justify-center items-center self-end px-9 mt-24 mr-20 w-28 h-28 bg-white border-solid shadow-sm border-[2.719px] border-[color:var(--green-04,#297373)] rounded-[90.625px] max-md:px-5 max-md:mt-10 max-md:mr-2.5">
@@ -16,7 +26,7 @@ const page = () => {
 			<ClubDetails />
 			<ClubRoadmap />
 			<ClubInstructor />
-			<Recommendations />
+			<Recommendations clubs={clubData} />
 		</>
 	);
 };
