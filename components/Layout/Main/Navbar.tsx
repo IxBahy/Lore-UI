@@ -3,8 +3,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import path from "path";
 import { useAuthStore } from "@/store/zustand";
+import { LogOut } from "lucide-react";
 const Navbar = () => {
-	const { isAuthenticated } = useAuthStore();
+	const { isAuthenticated, setIsAuthenticated, setUserToken, setRefreshToken } =
+		useAuthStore();
+	const handleUserLogOut = () => {
+		setIsAuthenticated(false);
+		setUserToken("");
+		setRefreshToken("");
+		localStorage.removeItem("access_token");
+		localStorage.removeItem("refresh_token");
+	};
 	const pathName = usePathname().slice(1).split("/");
 	const lastNameInPath = pathName.length > 0 ? pathName.pop() : pathName;
 
@@ -19,24 +28,27 @@ const Navbar = () => {
 					/>
 					<div>Lore</div>
 				</div>
-				<div className="flex gap-5 justify-between self-stretch my-auto text-neutral-800 max-md:flex-wrap max-md:max-w-full">
-					<Link
-						href={"/"}
-						className={`font-bold ${
-							lastNameInPath === "" ? "text-teal-700" : ""
-						}`}
-					>
-						Home
-					</Link>
-					<Link
-						href={"/about"}
-						className={`font-bold ${
-							lastNameInPath === "about" ? "text-teal-700" : ""
-						}`}
-					>
-						About Us
-					</Link>
-					{isAuthenticated && (
+
+				{isAuthenticated && (
+					<div className="flex gap-5 justify-between self-stretch my-auto text-neutral-800 max-md:flex-wrap max-md:max-w-full">
+						<Link
+							href={"/"}
+							className={`font-bold ${
+								lastNameInPath === "" ? "text-teal-700" : ""
+							}`}
+						>
+							Home
+						</Link>
+
+						<Link
+							href={"/about"}
+							className={`font-bold ${
+								lastNameInPath === "about" ? "text-teal-700" : ""
+							}`}
+						>
+							About Us
+						</Link>
+
 						<Link
 							href={"/club"}
 							className={`font-bold ${
@@ -45,8 +57,6 @@ const Navbar = () => {
 						>
 							Join Book Club
 						</Link>
-					)}
-					{isAuthenticated && (
 						<Link
 							href={"/profile/1"}
 							className={`font-bold ${
@@ -57,8 +67,11 @@ const Navbar = () => {
 						>
 							My Clubs
 						</Link>
-					)}
-				</div>
+						<button onClick={handleUserLogOut}>
+							<LogOut />{" "}
+						</button>
+					</div>
+				)}
 				{!isAuthenticated && (
 					<div className="flex gap-2 self-stretch my-auto whitespace-nowrap">
 						<Link

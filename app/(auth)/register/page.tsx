@@ -18,6 +18,7 @@ import { register } from "@/apis/auth";
 import { useRouter } from "next/navigation";
 
 import { useToast } from "@/components/ui/use-toast";
+import { useAuthStore } from "@/store/zustand";
 interface SocialIconProps {
 	src: string;
 	alt: string;
@@ -51,7 +52,11 @@ const formSchema = z.object({
 });
 
 const Register = () => {
+	const { isAuthenticated } = useAuthStore();
 	const router = useRouter();
+	if (isAuthenticated || !!localStorage.getItem("access_token")) {
+		router.push("/");
+	}
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {

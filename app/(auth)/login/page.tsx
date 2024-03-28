@@ -50,9 +50,17 @@ const formSchema = z.object({
 	password: z.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/),
 });
 const Login = () => {
-	const { toast } = useToast();
 	const router = useRouter();
-	const { setUserToken } = useAuthStore();
+	const { setUserToken, setIsAuthenticated, setRefreshToken, isAuthenticated } =
+		useAuthStore();
+	const { toast } = useToast();
+	console.log(isAuthenticated);
+
+	if (isAuthenticated || !!localStorage.getItem("access_token")) {
+		setIsAuthenticated(true);
+		setUserToken(localStorage.getItem("access_token") as string);
+		router.push("/");
+	}
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -66,7 +74,10 @@ const Login = () => {
 		const res = await login(values);
 		if (res.ok) {
 			const data = (await res.json()) as LoginResponseBody;
+			localStorage.setItem("access_token", data?.access);
 			setUserToken(data?.access);
+			setRefreshToken(data?.refresh);
+			setIsAuthenticated(true);
 			router.push("/");
 		} else {
 			toast({
