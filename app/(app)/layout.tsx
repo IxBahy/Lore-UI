@@ -20,8 +20,10 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const { isAuthenticated } = useAuthStore();
-	console.log("redircted", isAuthenticated);
-	if (!isAuthenticated) {
+	if (
+		!isAuthenticated ||
+		(typeof window !== "undefined" && !localStorage.getItem("access_token"))
+	) {
 		redirect("/login");
 	}
 	return (

@@ -52,6 +52,7 @@ const formSchema = z.object({
 });
 
 const Register = () => {
+	
 	const { isAuthenticated } = useAuthStore();
 	const router = useRouter();
 	if (isAuthenticated || !!localStorage.getItem("access_token")) {

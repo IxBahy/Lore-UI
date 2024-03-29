@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const ClubNav = ({ params }: { params: { slug: number } }) => {
+const ClubNav = ({ params }: { params: { slug: string } }) => {
 	const pathName = usePathname().split("/");
 	const lastNameInPath = pathName.pop();
 	return (

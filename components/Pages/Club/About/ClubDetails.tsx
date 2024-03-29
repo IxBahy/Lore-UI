@@ -1,4 +1,4 @@
-const ClubDetails = () => {
+const ClubDetails = ({ clubDetails }: { clubDetails: ClubDetails }) => {
 	return (
 		<div className="flex flex-col items-start self-center px-5 w-full leading-[120%] max-w-[1256px] max-md:max-w-full">
 			<div className="flex gap-5 justify-between items-start self-stretch text-2xl max-md:flex-wrap max-md:max-w-full">
@@ -8,20 +8,16 @@ const ClubDetails = () => {
 						<div className="grow">ABOUT OUR CLUB</div>
 					</div>
 					<div className="mt-3 text-4xl font-semibold leading-10 text-neutral-800 max-md:max-w-full">
-						Welcome to Our club “Time Travelers Book Club” - A Journey through
+						Welcome to Our club “{clubDetails.name}” - A Journey through
 						History!
 					</div>
 					<div className="mt-20 text-2xl font-bold text-zinc-600 max-md:mt-10 max-md:max-w-full">
 						Details:
 					</div>
 					<div className="mt-6 tracking-normal leading-7 max-md:max-w-full">
-						At [Time Travelers Book Club], we've created a dynamic and engaging
-						space for students passionate about history to come together and
-						explore the richness of the past through literature. Our book club
-						is more than just a reading group; it's a community of curious minds
-						seeking to unravel the narratives that have shaped our world.
+						{clubDetails.description}
 					</div>
-					<div className="mt-7 text-2xl font-bold text-zinc-700 text-opacity-80 max-md:max-w-full">
+					{/* <div className="mt-7 text-2xl font-bold text-zinc-700 text-opacity-80 max-md:max-w-full">
 						Our Mission:
 					</div>
 					<div className="flex gap-2 self-start mt-3 max-md:flex-wrap max-md:max-w-full">
@@ -66,7 +62,7 @@ const ClubDetails = () => {
 					</div>
 					<div className="mt-6 font-bold tracking-normal text-teal-700 leading-[160%] max-md:max-w-full">
 						Read More...
-					</div>
+					</div> */}
 				</div>
 				<div className="flex flex-col self-end pb-12 mt-9 text-white whitespace-nowrap basis-0 max-md:hidden">
 					<div className="flex justify-center items-center px-5 bg-orange-300 aspect-[1.04] h-[49px] rounded-[140.25px]">

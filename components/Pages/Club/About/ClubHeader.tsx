@@ -1,6 +1,6 @@
 import React from "react";
 
-const ClubHeader = () => {
+const ClubHeader = ({ clubDetails }: { clubDetails: ClubDetails }) => {
 	return (
 		<header className="flex justify-center items-center px-16 py-8 w-full bg-teal-900 max-md:px-5 max-md:max-w-full">
 			<div className="flex flex-col items-start w-full max-w-[1171px] max-md:max-w-full">
@@ -31,11 +31,10 @@ const ClubHeader = () => {
 									POPULAR
 								</div>
 								<div className="self-stretch mt-3 mr-4 text-3xl font-bold leading-9 max-md:mr-2.5 max-md:max-w-full">
-									Time Travelers Book Club
+									{clubDetails.name}
 								</div>
 								<div className="self-stretch mt-3 text-base leading-5 text-neutral-200 max-md:max-w-full">
-									Journey through the epochs with “Time Travelers Club” , where
-									history meets adventure, Explore the past, Discuss the present
+									{clubDetails.description}
 								</div>
 								<div className="flex gap-5 justify-between mt-2 text-sm leading-4">
 									<div className="flex gap-1 items-center whitespace-nowrap">
@@ -46,12 +45,20 @@ const ClubHeader = () => {
 										/>
 										<div className="self-stretch my-auto font-bold">4.5</div>
 										<div className="grow self-stretch my-auto font-medium text-center underline">
-											(<span className="underline">2,540 Reviews</span>)
+											(
+											<span className="underline">
+												{(Math.random() * 50).toFixed()} Reviews
+											</span>
+											)
 										</div>
 									</div>
 									<div className="flex gap-1.5 py-0.5">
 										<div className="grow whitespace-nowrap">Created By</div>
-										<div className="font-medium underline">Sloan Natoli</div>
+										<div className="font-medium underline">
+											{clubDetails.owner.first_name +
+												" " +
+												clubDetails.owner.last_name}
+										</div>
 										<img
 											loading="lazy"
 											src="https://cdn.builder.io/api/v1/image/assets/TEMP/96c2e328566ed4c51ccb7f94c9f7672a13152f59f1dfb7f22f8c1904397241d4?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
@@ -120,7 +127,9 @@ const ClubHeader = () => {
 						/>
 						<div className="grow my-auto">
 							<span className="text-sm leading-4">Duration : </span>
-							<span className="text-sm font-medium leading-4">3 months</span>
+							<span className="text-sm font-medium leading-4">
+								{clubDetails.roadmap.weeks_count} weeks
+							</span>
 						</div>
 					</div>
 				</div>

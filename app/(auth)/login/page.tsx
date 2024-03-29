@@ -51,12 +51,17 @@ const formSchema = z.object({
 });
 const Login = () => {
 	const router = useRouter();
-	const { setUserToken, setIsAuthenticated, setRefreshToken, isAuthenticated } =
-		useAuthStore();
+	const {
+		setUserToken,
+		setIsAuthenticated,
+		setRefreshToken,
+		isAuthenticated,
+		userToken,
+	} = useAuthStore();
 	const { toast } = useToast();
 	console.log(isAuthenticated);
 
-	if (isAuthenticated || !!localStorage.getItem("access_token")) {
+	if (isAuthenticated || userToken) {
 		setIsAuthenticated(true);
 		setUserToken(localStorage.getItem("access_token") as string);
 		router.push("/");

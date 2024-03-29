@@ -32,7 +32,8 @@ export const login = async (data: {
 };
 
 export const refreshToken = () => {
-	const token = localStorage.getItem("refresh_token");
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("refresh_token") : "";
 
 	if (token) {
 		fetch(process.env.API_URL + "refresh-token", {
@@ -44,8 +45,8 @@ export const refreshToken = () => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				localStorage.setItem("access", data.access);
-				localStorage.setItem("refresh", data.refresh);
+				localStorage.setItem("access_token", data.access);
+				localStorage.setItem("refresh_token", data.refresh);
 			});
 	}
 };

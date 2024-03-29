@@ -23,9 +23,9 @@ const page = ({ params }: { params: { slug: string } }) => {
 					className="w-full aspect-square"
 				/>
 			</div>
-			<ClubDetails />
-			<ClubRoadmap />
-			<ClubInstructor />
+			<ClubDetails clubDetails={clubDetails} />
+			<ClubRoadmap clubDetails={clubDetails} />
+			<ClubInstructor owner={clubDetails.owner} />
 			<Recommendations clubs={clubData} />
 		</>
 	);

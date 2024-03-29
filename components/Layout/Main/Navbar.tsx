@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/zustand";
 import { LogOut } from "lucide-react";
 const Navbar = () => {
+
 	const { isAuthenticated, setIsAuthenticated, setUserToken, setRefreshToken } =
 		useAuthStore();
 	const handleUserLogOut = () => {

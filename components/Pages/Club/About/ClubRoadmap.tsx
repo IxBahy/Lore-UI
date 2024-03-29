@@ -1,7 +1,11 @@
 import React from "react";
 import RoadmapCard from "./RoadmapCard";
 
-const ClubRoadmap = () => {
+const ClubRoadmap = ({ clubDetails }: { clubDetails: ClubDetails }) => {
+	const firstWeek = clubDetails.roadmap.weeks[0] ?? undefined;
+	const secondWeek = clubDetails.roadmap.weeks[1] ?? undefined;
+	const thirdWeek = clubDetails.roadmap.weeks[2] ?? undefined;
+	const fourthWeek = clubDetails.roadmap.weeks[3] ?? undefined;
 	return (
 		<>
 			{RoadMapTitle()}
@@ -24,24 +28,18 @@ const ClubRoadmap = () => {
 								</div>
 								<div className="max-md:max-w-full">
 									<div className="flex gap-5 max-md:flex-col max-md:gap-0 max-md:">
-										<RoadmapCard
-											number={1}
-											desc={`		In our first week, we'll kick off our literary journey by immersing
-					ourselves in Chapter 1. Get
-					ready to meet the characters and set the foundation for the adventure
-					that lies ahead.`}
-										/>
-										<RoadmapCard
-											number={2}
-											desc={`As we enter the second week, we'll dive into the
-													layers of the story with
-													<span className="font-semibold">
-														{" "}
-														Chapters 2 and 3
-													</span>
-													. Expect new developments, deeper character insights,
-													and a more intricate plot.`}
-										/>
+										{firstWeek && (
+											<RoadmapCard
+												number={firstWeek.degree}
+												desc={firstWeek.description}
+											/>
+										)}
+										{secondWeek && (
+											<RoadmapCard
+												number={secondWeek.degree}
+												desc={secondWeek.description}
+											/>
+										)}
 									</div>
 								</div>
 							</div>
@@ -62,18 +60,18 @@ const ClubRoadmap = () => {
 								</div>
 								<div className="max-md:max-w-full">
 									<div className="flex gap-5 max-md:flex-col max-md:gap-0 max-md:">
-										<RoadmapCard
-											number={3}
-											desc={`	Week 3 unfolds with the intensification of the plot in
-                      Chapters 4 and 5.
-                      Join the discussion as the story takes unexpected turns and
-                      our understanding deepens.`}
-										/>
-										<RoadmapCard
-											number={4}
-											desc={`Our final week crescendos with the climax and conclusion in Chapters 6 to 10.
-                      Brace yourselves for the culmination of our reading journey`}
-										/>
+										{thirdWeek && (
+											<RoadmapCard
+												number={thirdWeek.degree}
+												desc={thirdWeek.description}
+											/>
+										)}
+										{fourthWeek && (
+											<RoadmapCard
+												number={fourthWeek.degree}
+												desc={fourthWeek.description}
+											/>
+										)}
 									</div>
 								</div>
 							</div>
