@@ -20,3 +20,39 @@ export const getClubDetails = async (id: string): Promise<ClubDetails> => {
 	}
 	return res.json();
 };
+
+export const getClubMembers = async (id: string): Promise<ClubMember[]> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(process.env.API_URL + `club/${id}/members`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		refreshToken();
+		const rec_res = getClubMembers(id);
+		return rec_res;
+	}
+	return res.json();
+};
+
+export const getClubReviews = async (id: string): Promise<Review[]> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(process.env.API_URL + `club/${id}/reviews`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		refreshToken();
+		const rec_res = getClubReviews(id);
+		return rec_res;
+	}
+	return res.json();
+};

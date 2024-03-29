@@ -38,3 +38,35 @@ interface ClubDetails extends Club {
 	owner: Owner;
 	rating: number;
 }
+
+interface ClubMember {
+	id: string;
+	last_login: string | null;
+	is_superuser: boolean;
+	is_staff: boolean;
+	is_active: boolean;
+	date_joined: string;
+	first_name: string;
+	last_name: string;
+	username: string;
+	password: string;
+	img_url: string | null;
+	birth_date: string | null;
+	phone: string | null;
+	email: string;
+	type: string | null;
+	roles: string[] | null;
+	groups: string[];
+	user_permissions: string[];
+	clubs: string[];
+	chats: string[];
+	friends: number[];
+}
+
+interface Review {
+	id: number;
+	review: string;
+	rating: number;
+	club_id: number;
+	user_id: number;
+}
