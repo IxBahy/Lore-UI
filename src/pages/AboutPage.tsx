@@ -4,7 +4,7 @@ import { SecondFeature } from "@/components/Pages/About/SecondFeature";
 import ThirdFeature from "@/components/Pages/About/ThirdFeature";
 import React from "react";
 
-const About = () => {
+export const AboutPage = () => {
 	return (
 		<main>
 			<Presentation />
@@ -33,5 +33,3 @@ const About = () => {
 		</main>
 	);
 };
-
-export default About;

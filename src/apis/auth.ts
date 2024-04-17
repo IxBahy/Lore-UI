@@ -5,9 +5,9 @@ type registerData = {
 	password: string;
 	email: string;
 };
-
+const baseUrl: string = import.meta.env.VITE_HOST;
 export const register = async (data: registerData): Promise<Response> => {
-	const response = await fetch(process.env.API_URL + "register", {
+	const response = await fetch(baseUrl + "register", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -21,7 +21,7 @@ export const login = async (data: {
 	username: string;
 	password: string;
 }): Promise<Response> => {
-	const response = await fetch(process.env.API_URL + "login", {
+	const response = await fetch(baseUrl + "login", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const refreshToken = () => {
 		typeof window !== "undefined" ? localStorage.getItem("refresh_token") : "";
 
 	if (token) {
-		fetch(process.env.API_URL + "refresh-token", {
+		fetch(baseUrl + "refresh-token", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

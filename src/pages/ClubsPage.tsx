@@ -8,10 +8,10 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
-import { use } from "react";
+// import { use } from "react";
 
-const page = () => {
-	const clubData = use(getClubs());
+export const ClubsPage = () => {
+	const clubData = [] as Club[];
 	return (
 		<main className="">
 			<Header />
@@ -62,5 +62,3 @@ const page = () => {
 		</main>
 	);
 };
-
-export default page;

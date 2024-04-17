@@ -11,12 +11,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { register } from "@/apis/auth";
-import { useRouter } from "next/navigation";
 
 import { useToast } from "@/components/ui/use-toast";
 import { useAuthStore } from "@/store/zustand";
+import { Link } from "react-router-dom";
 interface SocialIconProps {
 	src: string;
 	alt: string;
@@ -49,12 +48,12 @@ const formSchema = z.object({
 	last_name: z.string().min(2).max(50),
 });
 
-const Register = () => {
+export const RegisterPage = () => {
 	const { isAuthenticated } = useAuthStore();
-	const router = useRouter();
-	if (isAuthenticated || !!localStorage.getItem("access_token")) {
-		router.push("/");
-	}
+	// const router = useRouter();
+	// if (isAuthenticated || !!localStorage.getItem("access_token")) {
+	// 	router.push("/");
+	// }
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -86,7 +85,7 @@ const Register = () => {
 		} = values;
 		const res = await register(data);
 		if (res.ok) {
-			router.push("/login");
+			// router.push("/login");
 		} else {
 			toast({
 				variant: "destructive",
@@ -203,7 +202,7 @@ const Register = () => {
 
 			<div className="mt-4 text-sm leading-4 underline text-slate-400">
 				<span className="text-neutral-400">Already have an account?</span>{" "}
-				<Link href="/login" className="font-medium underline text-slate-400">
+				<Link to="/login" className="font-medium underline text-slate-400">
 					Sign in
 				</Link>
 			</div>
@@ -211,4 +210,3 @@ const Register = () => {
 	);
 };
 
-export default Register;

@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from "react";
-const layout = ({ children }: PropsWithChildren) => {
+import { Outlet } from "react-router-dom";
+export const AuthLayout = ({ children }: PropsWithChildren) => {
 	return (
 		<main className="flex h-screen">
 			<section className="flex grow justify-center items-center  w-full h-full text-6xl font-bold text-teal-700 whitespace-nowrap bg-stone-900 max-md:px-5 max-md:mt-10 max-md:max-w-full max-md:text-4xl">
@@ -13,9 +14,7 @@ const layout = ({ children }: PropsWithChildren) => {
 					<h1 className="max-md:text-4xl">Lore</h1>
 				</div>
 			</section>
-			{children}
+			<Outlet />
 		</main>
 	);
 };
-
-export default layout;

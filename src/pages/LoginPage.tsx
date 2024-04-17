@@ -12,11 +12,10 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 import { login } from "@/apis/auth";
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/zustand";
 import { useToast } from "@/components/ui/use-toast";
+import { Link, useNavigate } from "react-router-dom";
 interface SocialIconProps {
 	src: string;
 	alt: string;
@@ -48,8 +47,7 @@ const formSchema = z.object({
 	username: z.string().min(4).max(50),
 	password: z.string().regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/),
 });
-const Login = () => {
-	const router = useRouter();
+export const LoginPage = () => {
 	const {
 		setUserToken,
 		setIsAuthenticated,
@@ -59,11 +57,11 @@ const Login = () => {
 	} = useAuthStore();
 	const { toast } = useToast();
 	console.log(isAuthenticated);
-
+	const navigate = useNavigate();
 	if (isAuthenticated || userToken) {
 		setIsAuthenticated(true);
 		setUserToken(localStorage.getItem("access_token") as string);
-		router.push("/");
+		navigate("/");
 	}
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -83,7 +81,6 @@ const Login = () => {
 			setUserToken(data?.access);
 			setRefreshToken(data?.refresh);
 			setIsAuthenticated(true);
-			router.push("/");
 		} else {
 			toast({
 				variant: "destructive",
@@ -152,7 +149,7 @@ const Login = () => {
 			</div>
 			<div className="mt-9 text-sm leading-4 underline text-slate-400">
 				<span className="text-neutral-400">Don't have an account? </span>{" "}
-				<Link href="/register" className="font-medium underline text-slate-400">
+				<Link to="/register" className="font-medium underline text-slate-400">
 					Sign Up
 				</Link>
 			</div>
@@ -163,5 +160,3 @@ const Login = () => {
 const SocialIcon: React.FC<SocialIconProps> = ({ src, alt }) => (
 	<img src={src} alt={alt} className="shrink-0 aspect-[1.02] w-[50px]" />
 );
-
-export default Login;

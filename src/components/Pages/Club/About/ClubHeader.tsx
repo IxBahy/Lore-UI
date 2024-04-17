@@ -1,6 +1,6 @@
 import { getClubMembers } from "@/apis/club";
 import { join_club } from "@/apis/student";
-import React, { use } from "react";
+import React, { useEffect, useState } from "react";
 
 const ClubHeader = ({
 	clubDetails,
@@ -9,9 +9,18 @@ const ClubHeader = ({
 	clubDetails: ClubDetails;
 	id: number;
 }) => {
-	const members = use(getClubMembers(`${clubDetails.id}`));
+	const [members, setMembers] = useState<ClubMember[]>();
+	useEffect(() => {
+		const fetchMembers = async () => {
+			const data = await getClubMembers(`${clubDetails.id}`);
+			setMembers(data);
+		};
+		fetchMembers();
+	}, []);
+	if (!Array.isArray(members)) return;
+
 	const check_if_memeber = (): boolean => {
-		const member = members.filter((member) => member.id === id);
+		const member = members?.filter((member) => member.id === id);
 		if (member.length > 0) return true;
 		return false;
 	};
@@ -20,6 +29,7 @@ const ClubHeader = ({
 	const handleJoinClub = () => {
 		join_club(clubDetails.id);
 	};
+	console.log("returning");
 
 	return (
 		<header className="flex justify-center items-center px-16 py-8 w-full bg-teal-900 max-md:px-5 max-md:max-w-full">

@@ -1,9 +1,18 @@
 import { getClubs } from "@/apis/club";
 import Card from "@/components/ui/Card";
-import { use } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const PopularClubs = () => {
-	// const clubData = use(getClubs());
+	const [clubsArray, setClubArray] = useState<Club[] | undefined>();
+
+	useEffect(() => {
+		const fetchClubs = async () => {
+			const data = await getClubs();
+			setClubArray(data);
+		};
+		fetchClubs();
+	}, []);
+	if (!clubsArray) return;
 	return (
 		<>
 			<div className="flex flex-col px-20 py-12 mt-44 w-full bg-slate-400 bg-opacity-10 max-md:px-5 max-md:mt-10 max-md:max-w-full">
@@ -28,11 +37,11 @@ const PopularClubs = () => {
 				</div>
 				<div className="self-center mt-12 w-full max-md:pr-5 max-md:mt-10 max-md:max-w-full">
 					<section className="flex mx-16 mt-8 gap-5 ">
-						{/* {clubData.map((club, index) => (
+						{clubsArray.map((club, index) => (
 							<div key={index} className="flex-grow w-full md:w-full lg:w-3/12">
 								<Card {...club} />
 							</div>
-						))} */}
+						))}
 					</section>
 				</div>
 

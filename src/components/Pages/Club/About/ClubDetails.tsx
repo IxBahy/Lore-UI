@@ -1,4 +1,5 @@
-const ClubDetails = ({ clubDetails }: { clubDetails: ClubDetails }) => {
+const ClubDetails = () => {
+	const clubDetails = {} as ClubDetails; //api req here
 	return (
 		<div className="flex flex-col items-start self-center px-5 w-full leading-[120%] max-w-[1256px] max-md:max-w-full">
 			<div className="flex gap-5 justify-between items-start self-stretch text-2xl max-md:flex-wrap max-md:max-w-full">

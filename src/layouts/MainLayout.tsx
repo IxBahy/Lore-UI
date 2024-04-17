@@ -1,13 +1,15 @@
+import Footer from "@/components/Layout/Main/Footer";
+import Navbar from "@/components/Layout/Main/Navbar";
 import { cn } from "@/lib/utils";
-import { Toaster } from "@/components/ui/toaster";
+import React from "react";
 import { Outlet } from "react-router-dom";
-export function MainLayout() {
+
+export const MainLayout = () => {
 	return (
-		<div
-			className={cn("min-h-screen bg-background font-sans antialiased w-full")}
-		>
+		<div className={cn("min-h-screen bg-background font-sans antialiased")}>
+			<Navbar />
 			<Outlet />
-			<Toaster />
+			<Footer />
 		</div>
 	);
-}
+};

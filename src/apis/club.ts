@@ -1,12 +1,15 @@
 import { refreshToken } from "./auth";
+const baseUrl: string = import.meta.env.VITE_HOST;
 export const getClubs = async (params: string = ""): Promise<Club[]> => {
-	const res = await fetch(import.meta.env.API_URL + `club?${params}`);
+	console.log("url ", baseUrl);
+
+	const res = await fetch(baseUrl + `club?${params}`);
 	return res.json();
 };
 export const getClubDetails = async (id: string): Promise<ClubDetails> => {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
-	const res = await fetch(import.meta.env.API_URL + `club/${id}`, {
+	const res = await fetch(baseUrl + `club/${id}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -24,7 +27,7 @@ export const getClubDetails = async (id: string): Promise<ClubDetails> => {
 export const getClubMembers = async (id: string): Promise<ClubMember[]> => {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
-	const res = await fetch(import.meta.env.API_URL + `club/${id}/members`, {
+	const res = await fetch(baseUrl + `club/${id}/members`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -42,7 +45,7 @@ export const getClubMembers = async (id: string): Promise<ClubMember[]> => {
 export const getClubReviews = async (id: string): Promise<Review[]> => {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
-	const res = await fetch(import.meta.env.API_URL + `club/${id}/reviews`, {
+	const res = await fetch(baseUrl + `club/${id}/reviews`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
