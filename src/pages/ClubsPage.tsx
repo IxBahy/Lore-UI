@@ -53,7 +53,7 @@ export const ClubsPage = () => {
 								key={index}
 								className="columns-1 col-span-1 w-full md:w-full "
 							>
-								<Card {...club} />
+								<Card club={club} />
 							</div>
 						))}
 					</div>

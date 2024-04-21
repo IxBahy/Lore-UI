@@ -1,56 +1,55 @@
 import ClubHeader from "@/components/Pages/Club/About/ClubHeader";
 import { SectionHeader } from "@/components/Pages/Club/Home/SectionHeader";
-import Header from "@/components/Pages/Profile/Header";
 import Card from "@/components/ui/Card";
 import React from "react";
-
-const clubData = [
+// FOR THIS CLUBG TYPE
+// id: number;
+// name: string;
+// description: string;
+// type: clubTypes;
+// img_url: string;
+// owner: string;
+// create dummy data array
+const clubData: Club[] = [
 	{
-		imageSrc:
-			"https://cdn.builder.io/api/v1/image/assets/TEMP/d4cb8502fdbf66e0db0be5cd2dbed94d170c52be56592f8b31608a621fc1eead?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
-		imageAlt: "Past Perspectives Society",
-		title: "Past Perspectives Society",
+		id: 1,
+		type: "public",
+		name: "DSC VIT",
 		description:
-			"Embark on a captivating journey through time with the Past Perspectives Society, where history comes alive through engaging discussions.",
-		joinIconSrc:
-			"https://cdn.builder.io/api/v1/image/assets/TEMP/11d86b516dda64d74867508485cc62235188d953f6b56913e3a36ab7a4176d8b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
-		joinIconAlt: "Join club icon",
+			"Developer Student Clubs is a community where everyone is welcome. We help students bridge the gap between theory and practice and grow their knowledge by providing a peer-to-peer learning environment, by conducting workshops, study jams, and building solutions for local businesses.",
+		img_url: "https://i.ibb.co/0r6k7mJ/csi.png",
+		owner: "Google",
 	},
 	{
-		imageSrc:
-			"https://cdn.builder.io/api/v1/image/assets/TEMP/8bab3aa4e07f71afa97e3634610c80c839703734016c58b34413ae69bc782643?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
-		imageAlt: "Ancient Chronicles Book Club",
-		title: "Ancient Chronicles Book Club",
+		id: 2,
+		type: "public",
+		name: "ACM VIT",
 		description:
-			"Journey through time with the Ancient Chronicles Book Club, where each page turns into a portal to the past. Join our community of history enthusiasts",
-		joinIconSrc:
-			"https://cdn.builder.io/api/v1/image/assets/TEMP/11d86b516dda64d74867508485cc62235188d953f6b56913e3a36ab7a4176d8b?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
-		joinIconAlt: "Join club icon",
+			"The Association for Computing Machinery is an international learned society for computing. It was founded in 1947, and is the world's largest scientific and educational computing society.",
+		img_url: "https://i.ibb.co/6Jhjg6d/acm.png",
+		owner: "VIT",
 	},
 	{
-		imageSrc:
-			"https://cdn.builder.io/api/v1/image/assets/TEMP/1bd85a80393010ad6d1348e661ba8190813ae01eef2f21267f3066edb5958e25?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
-		imageAlt: "ArchaeoReads Society",
-		title: "ArchaeoReads Society",
+		id: 3,
+		type: "public",
+		name: "IEEE VIT",
 		description:
-			"Dive into the fascinating world of ArchaeoReads Society, where the pages of history are unearthed through captivating narratives.",
-		joinIconSrc:
-			"https://cdn.builder.io/api/v1/image/assets/TEMP/7db23a090460a9ad7b5a4066197aae8aa4a9cd0528ad9bd0fa95adf366d42714?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
-		joinIconAlt: "Join club icon",
+			"The Institute of Electrical and Electronics Engineers is a professional association for electronic engineering and electrical engineering with its corporate office in New York City and its operations center in Piscataway, New Jersey.",
+		img_url: "https://i.ibb.co/7Gq2j2L/ieee.png",
+		owner: "VIT",
 	},
 	{
-		imageSrc:
-			"https://cdn.builder.io/api/v1/image/assets/TEMP/1bd85a80393010ad6d1348e661ba8190813ae01eef2f21267f3066edb5958e25?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
-		imageAlt: "ArchaeoReads Society",
-		title: "ArchaeoReads Society",
+		id: 4,
+		type: "public",
+		name: "CSI VIT",
 		description:
-			"Dive into the fascinating world of ArchaeoReads Society, where the pages of history are unearthed through captivating narratives.",
-		joinIconSrc:
-			"https://cdn.builder.io/api/v1/image/assets/TEMP/7db23a090460a9ad7b5a4066197aae8aa4a9cd0528ad9bd0fa95adf366d42714?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&",
-		joinIconAlt: "Join club icon",
+			"The Computer Society of India is a professional body where students can share their knowledge and exchange ideas. It is the largest, oldest and most professionally managed computer science organization in India.",
+		img_url: "https://i.ibb.co/0r6k7mJ/csi.png",
+		owner: "VIT",
 	},
 ];
-const page = () => {
+
+export const ProfilePage = () => {
 	return (
 		<>
 			<main className="h-screen w-full flex flex-col">
@@ -59,9 +58,9 @@ const page = () => {
 				</h2>
 				<SectionHeader />
 				<div className=" mx-16 my-8 gap-5 grid grid-cols-4 grid-rows-1">
-					{clubData.map((club, index) => (
+					{clubData.map((club: Club, index) => (
 						<div key={index} className="columns-1 col-span-1 w-full md:w-full ">
-							<Card {...club} />
+							<Card club={club} />
 						</div>
 					))}
 				</div>
@@ -69,5 +68,3 @@ const page = () => {
 		</>
 	);
 };
-
-export default page;

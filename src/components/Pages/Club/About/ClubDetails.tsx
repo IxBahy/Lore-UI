@@ -1,5 +1,19 @@
+import { getClubDetails } from "@/apis/club";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 const ClubDetails = () => {
-	const clubDetails = {} as ClubDetails; //api req here
+	const { slug } = useParams();
+	if (!slug) return;
+	const [clubDetails, setClubDetails] = useState<ClubDetails>();
+	useEffect(() => {
+		const fetchDetails = async () => {
+			const data = await getClubDetails(slug);
+			setClubDetails(data);
+		};
+		fetchDetails();
+	}, []);
+	if (!clubDetails) return;
 	return (
 		<div className="flex flex-col items-start self-center px-5 w-full leading-[120%] max-w-[1256px] max-md:max-w-full">
 			<div className="flex gap-5 justify-between items-start self-stretch text-2xl max-md:flex-wrap max-md:max-w-full">
@@ -18,52 +32,6 @@ const ClubDetails = () => {
 					<div className="mt-6 tracking-normal leading-7 max-md:max-w-full">
 						{clubDetails.description}
 					</div>
-					{/* <div className="mt-7 text-2xl font-bold text-zinc-700 text-opacity-80 max-md:max-w-full">
-						Our Mission:
-					</div>
-					<div className="flex gap-2 self-start mt-3 max-md:flex-wrap max-md:max-w-full">
-						<img
-							loading="lazy"
-							src="https://cdn.builder.io/api/v1/image/assets/TEMP/149e01504f88fa02784802e506220954e2a65cc5e0c0a526563fdbf3cbd69924?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							className="w-6 aspect-square"
-						/>
-						<div className="grow max-md:max-w-full">
-							Provide a platform for students to expand their historical
-							knowledge
-						</div>
-					</div>
-					<div className="flex gap-2 justify-between mt-1 max-md:flex-wrap max-md:max-w-full">
-						<img
-							loading="lazy"
-							src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9397b088b4465e1d265a3c66a76d30c141ab72ed3484c58f382e12bcaa20477?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							className="self-start w-6 aspect-square"
-						/>
-						<div className="flex-auto max-md:max-w-full">
-							Cultivate a welcoming space where students can connect, share
-							insights
-						</div>
-					</div>
-					<div className="flex gap-2.5 self-start mt-2 whitespace-nowrap">
-						<img
-							loading="lazy"
-							src="https://cdn.builder.io/api/v1/image/assets/TEMP/acd63e7bba6179c93cc5fc20eecd347b776399f73531545d9bdcb148a34427e7?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							className="self-start w-6 aspect-square"
-						/>
-						<div className="grow">Explore a spectrum of historical topics</div>
-					</div>
-					<div className="flex gap-2 self-start mt-2 text-zinc-600 max-md:flex-wrap max-md:max-w-full">
-						<img
-							loading="lazy"
-							src="https://cdn.builder.io/api/v1/image/assets/TEMP/d22428819fbc855aa71453d35526ae248841be0855059a6f51455f2320ba53f3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-							className="w-6 aspect-square"
-						/>
-						<div className="flex-auto max-md:max-w-full">
-							Design and code a B2B website, a B2C blog, and an ecommerce site
-						</div>
-					</div>
-					<div className="mt-6 font-bold tracking-normal text-teal-700 leading-[160%] max-md:max-w-full">
-						Read More...
-					</div> */}
 				</div>
 				<div className="flex flex-col self-end pb-12 mt-9 text-white whitespace-nowrap basis-0 max-md:hidden">
 					<div className="flex justify-center items-center px-5 bg-orange-300 aspect-[1.04] h-[49px] rounded-[140.25px]">
@@ -108,3 +76,52 @@ const ClubDetails = () => {
 };
 
 export default ClubDetails;
+
+{
+	/* <div className="mt-7 text-2xl font-bold text-zinc-700 text-opacity-80 max-md:max-w-full">
+						Our Mission:
+					</div>
+					<div className="flex gap-2 self-start mt-3 max-md:flex-wrap max-md:max-w-full">
+						<img
+							loading="lazy"
+							src="https://cdn.builder.io/api/v1/image/assets/TEMP/149e01504f88fa02784802e506220954e2a65cc5e0c0a526563fdbf3cbd69924?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
+							className="w-6 aspect-square"
+						/>
+						<div className="grow max-md:max-w-full">
+							Provide a platform for students to expand their historical
+							knowledge
+						</div>
+					</div>
+					<div className="flex gap-2 justify-between mt-1 max-md:flex-wrap max-md:max-w-full">
+						<img
+							loading="lazy"
+							src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9397b088b4465e1d265a3c66a76d30c141ab72ed3484c58f382e12bcaa20477?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
+							className="self-start w-6 aspect-square"
+						/>
+						<div className="flex-auto max-md:max-w-full">
+							Cultivate a welcoming space where students can connect, share
+							insights
+						</div>
+					</div>
+					<div className="flex gap-2.5 self-start mt-2 whitespace-nowrap">
+						<img
+							loading="lazy"
+							src="https://cdn.builder.io/api/v1/image/assets/TEMP/acd63e7bba6179c93cc5fc20eecd347b776399f73531545d9bdcb148a34427e7?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
+							className="self-start w-6 aspect-square"
+						/>
+						<div className="grow">Explore a spectrum of historical topics</div>
+					</div>
+					<div className="flex gap-2 self-start mt-2 text-zinc-600 max-md:flex-wrap max-md:max-w-full">
+						<img
+							loading="lazy"
+							src="https://cdn.builder.io/api/v1/image/assets/TEMP/d22428819fbc855aa71453d35526ae248841be0855059a6f51455f2320ba53f3?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
+							className="w-6 aspect-square"
+						/>
+						<div className="flex-auto max-md:max-w-full">
+							Design and code a B2B website, a B2C blog, and an ecommerce site
+						</div>
+					</div>
+					<div className="mt-6 font-bold tracking-normal text-teal-700 leading-[160%] max-md:max-w-full">
+						Read More...
+					</div> */
+}

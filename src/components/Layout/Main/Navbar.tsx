@@ -1,17 +1,19 @@
 import { useAuthStore } from "@/store/zustand";
 import { LogOut } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const Navbar = () => {
 	const token = localStorage.getItem("access_token") ?? "";
 	const { isAuthenticated, setIsAuthenticated, setUserToken, setRefreshToken } =
 		useAuthStore();
-
+	const nav = useNavigate();
 	const handleUserLogOut = () => {
 		setIsAuthenticated(false);
 		setUserToken("");
 		setRefreshToken("");
 		localStorage.removeItem("access_token");
 		localStorage.removeItem("refresh_token");
+		nav("/login");
+		
 	};
 	let location = useLocation();
 	const pathName = location.pathname.slice(1).split("/");

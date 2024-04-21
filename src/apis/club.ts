@@ -1,8 +1,7 @@
+import { removeTokens } from "@/lib/utils";
 import { refreshToken } from "./auth";
 const baseUrl: string = import.meta.env.VITE_HOST;
 export const getClubs = async (params: string = ""): Promise<Club[]> => {
-	console.log("url ", baseUrl);
-
 	const res = await fetch(baseUrl + `club?${params}`);
 	return res.json();
 };
@@ -17,10 +16,9 @@ export const getClubDetails = async (id: string): Promise<ClubDetails> => {
 		},
 	});
 	if (res.status === 401) {
-		refreshToken();
-		const rec_res = getClubDetails(id);
-		return rec_res;
+		removeTokens();
 	}
+	refreshToken();
 	return res.json();
 };
 
@@ -34,11 +32,10 @@ export const getClubMembers = async (id: string): Promise<ClubMember[]> => {
 			Authorization: `Bearer ${token}`,
 		},
 	});
-	if (res.status === 401) {
-		refreshToken();
-		const rec_res = getClubMembers(id);
-		return rec_res;
+	if (res.status === 401 && token !== undefined) {
+		removeTokens();
 	}
+	refreshToken();
 	return res.json();
 };
 
@@ -53,9 +50,8 @@ export const getClubReviews = async (id: string): Promise<Review[]> => {
 		},
 	});
 	if (res.status === 401) {
-		refreshToken();
-		const rec_res = getClubReviews(id);
-		return rec_res;
+		removeTokens();
 	}
+	refreshToken();
 	return res.json();
 };

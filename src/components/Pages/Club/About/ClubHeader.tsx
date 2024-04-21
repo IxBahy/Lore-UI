@@ -29,7 +29,6 @@ const ClubHeader = ({
 	const handleJoinClub = () => {
 		join_club(clubDetails.id);
 	};
-	console.log("returning");
 
 	return (
 		<header className="flex justify-center items-center px-16 py-8 w-full bg-teal-900 max-md:px-5 max-md:max-w-full">

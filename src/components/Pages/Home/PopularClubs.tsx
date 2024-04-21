@@ -39,7 +39,7 @@ const PopularClubs = () => {
 					<section className="flex mx-16 mt-8 gap-5 ">
 						{clubsArray.map((club, index) => (
 							<div key={index} className="flex-grow w-full md:w-full lg:w-3/12">
-								<Card {...club} />
+								<Card club={club} />
 							</div>
 						))}
 					</section>

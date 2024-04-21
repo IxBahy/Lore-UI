@@ -2,14 +2,13 @@ import React from "react";
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
 
-const page = () => {
+export const ProfileProgressPage = () => {
 	const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 	return (
 		<main className="w-full">
@@ -40,5 +39,3 @@ const page = () => {
 		</main>
 	);
 };
-
-export default page;

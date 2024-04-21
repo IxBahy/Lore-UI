@@ -1,9 +1,10 @@
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 
-const Header = ({ params }: { params: { slug: number } }) => {
-	const pathName = usePathname().split("/");
+const Header = () => {
+	const { slug } = useParams();
+	let location = useLocation();
+	const pathName = location.pathname.split("/");
 	const lastNameInPath = pathName.pop();
 	return (
 		<>
@@ -27,7 +28,7 @@ const Header = ({ params }: { params: { slug: number } }) => {
 				<div className="flex flex-col ml-16 max-w-full w-1/2">
 					<div className="flex gap-5  max-md:flex-wrap max-md:max-w-full">
 						<Link
-							href={`/profile/${params.slug}/`}
+							to={`/profile/${slug}/`}
 							className={`grow text-center py-7 min-w-40   ${
 								pathName.length === 2
 									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700 "
@@ -37,7 +38,7 @@ const Header = ({ params }: { params: { slug: number } }) => {
 							Clubs
 						</Link>
 						<Link
-							href={`/profile/${params.slug}/progress`}
+							to={`/profile/${slug}/progress`}
 							className={`grow my-auto flex-auto  py-7 min-w-40 text-center ${
 								lastNameInPath === "progress"
 									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700"
@@ -48,7 +49,7 @@ const Header = ({ params }: { params: { slug: number } }) => {
 						</Link>
 
 						<Link
-							href={`/profile/${params.slug}/friends`}
+							to={`/profile/${slug}/friends`}
 							className={`grow my-auto flex-auto py-7 min-w-40 text-center ${
 								lastNameInPath === "friends"
 									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700"

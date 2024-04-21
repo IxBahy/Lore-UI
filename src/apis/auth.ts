@@ -34,19 +34,31 @@ export const login = async (data: {
 export const refreshToken = () => {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("refresh_token") : "";
-
-	if (token) {
-		fetch(baseUrl + "refresh-token", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ refresh: token }),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				localStorage.setItem("access_token", data.access);
-				localStorage.setItem("refresh_token", data.refresh);
-			});
+	console.log(token);
+	try {
+		if (token) {
+			fetch(baseUrl + "refresh-token", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ refresh: token }),
+			})
+				.then((res) => {
+					if (res.status === 200) {
+						return res.json();
+					} else {
+						throw new Error("Error");
+					}
+				})
+				.then((data) => {
+					console.log(data);
+					if (data) {
+						localStorage.setItem("access_token", data.access);
+					}
+				});
+		}
+	} catch (error) {
+		console.log(error);
 	}
 };

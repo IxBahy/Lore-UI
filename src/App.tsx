@@ -11,6 +11,13 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { ClubsPage } from "./pages/ClubsPage";
 import { ClubLayout } from "./layouts/ClubLayout";
 import ClubDetails from "./components/Pages/Club/About/ClubDetails";
+import { ClubMaterialPage } from "./pages/ClubMaterialPage";
+import { ClubMembersPage } from "./pages/ClubMembersPage";
+import { ClubReviewsPage } from "./pages/ClubReviewsPage";
+import { ProfilePage } from "./pages/ProfilePage";
+import { ProfileLayout } from "./layouts/ProfileLayout";
+import { ProfileProgressPage } from "./pages/ProfileProgressPage";
+import { ProfileFriendsPage } from "./pages/ProfileFriendsPage";
 function App() {
 	const router = createBrowserRouter([
 		{
@@ -36,6 +43,36 @@ function App() {
 						{
 							path: "",
 							element: <ClubDetails />,
+						},
+						{
+							path: "material",
+							element: <ClubMaterialPage />,
+						},
+						{
+							path: "members",
+							element: <ClubMembersPage />,
+						},
+						{
+							path: "reviews",
+							element: <ClubReviewsPage />,
+						},
+					],
+				},
+				{
+					path: "/profile/:slug",
+					element: <ProfileLayout />,
+					children: [
+						{
+							path: "",
+							element: <ProfilePage />,
+						},
+						{
+							path: "progress",
+							element: <ProfileProgressPage />,
+						},
+						{
+							path: "friends",
+							element: <ProfileFriendsPage />,
 						},
 					],
 				},

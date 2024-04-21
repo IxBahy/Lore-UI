@@ -2,7 +2,7 @@ import ClubContent from "@/components/Pages/Club/Material/ClubContent";
 import ClubVote from "@/components/Pages/Club/Material/ClubVote";
 import CurrentlyReading from "@/components/Pages/Club/Material/CurrentlyReading";
 
-const page = () => {
+export const ClubMaterialPage = () => {
 	return (
 		<main>
 			<CurrentlyReading />
@@ -11,5 +11,3 @@ const page = () => {
 		</main>
 	);
 };
-
-export default page;

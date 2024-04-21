@@ -59,8 +59,8 @@ export const LoginPage = () => {
 	console.log(isAuthenticated);
 	const navigate = useNavigate();
 	if (isAuthenticated || userToken) {
-		setIsAuthenticated(true);
-		setUserToken(localStorage.getItem("access_token") as string);
+		// setIsAuthenticated(true);
+		// setUserToken(localStorage.getItem("access_token") as string);
 		navigate("/");
 	}
 	const form = useForm<z.infer<typeof formSchema>>({
