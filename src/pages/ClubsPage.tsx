@@ -8,14 +8,24 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useEffect, useState } from "react";
 // import { use } from "react";
 
 export const ClubsPage = () => {
-	const clubData = [] as Club[];
+	const [clubsArray, setClubArray] = useState<Club[] | undefined>();
+	const [filter, setFilter] = useState<Filter>({});
+	useEffect(() => {
+		const fetchClubs = async () => {
+			const data = await getClubs(filter);
+			setClubArray(data);
+		};
+		fetchClubs();
+	}, []);
+	if (!clubsArray) return;
 	return (
 		<main className="">
 			<Header />
-			<FilterControls />
+			<FilterControls setFilter={setFilter} />
 			<div className="grid grid-cols-6  ">
 				{/* Side Filter Accordings */}
 				<section className="columns-1 col-span-1 border  mt-16 ms-8">
@@ -48,7 +58,7 @@ export const ClubsPage = () => {
 				</section>
 				<section className=" columns-5 col-span-5 flex flex-col min-h-screen w-full items-center">
 					<div className=" mx-16 mt-8 gap-5 grid grid-cols-3 ">
-						{clubData.map((club, index) => (
+						{clubsArray.map((club, index) => (
 							<div
 								key={index}
 								className="columns-1 col-span-1 w-full md:w-full "

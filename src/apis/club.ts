@@ -1,8 +1,9 @@
 import { removeTokens } from "@/lib/utils";
 import { refreshToken } from "./auth";
 const baseUrl: string = import.meta.env.VITE_HOST;
-export const getClubs = async (params: string = ""): Promise<Club[]> => {
-	const res = await fetch(baseUrl + `club?${params}`);
+export const getClubs = async (filter: Filter): Promise<Club[]> => {
+	const query = "";
+	const res = await fetch(baseUrl + `club?${query}`);
 	return res.json();
 };
 export const getClubDetails = async (id: string): Promise<ClubDetails> => {

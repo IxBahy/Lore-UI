@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-const ClubNav = ({ slug }: { slug: string }) => {
+const ClubNav = ({ slug, isMember }: { slug: string; isMember: boolean }) => {
 	let location = useLocation();
 	const pathName = location.pathname.split("/");
 	const lastNameInPath = pathName.pop();
@@ -18,26 +18,30 @@ const ClubNav = ({ slug }: { slug: string }) => {
 					>
 						About Club
 					</Link>
-					<Link
-						to={`/club/${slug}/material`}
-						className={`grow text-center py-7 min-w-40   ${
-							lastNameInPath === "material"
-								? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700 "
-								: ""
-						}`}
-					>
-						Material
-					</Link>
-					<Link
-						to={`/club/${slug}/members`}
-						className={`grow text-center py-7 min-w-40   ${
-							lastNameInPath === "members"
-								? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700 "
-								: ""
-						}`}
-					>
-						Members
-					</Link>
+					{isMember && (
+						<Link
+							to={`/club/${slug}/material`}
+							className={`grow text-center py-7 min-w-40   ${
+								lastNameInPath === "material"
+									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700 "
+									: ""
+							}`}
+						>
+							Material
+						</Link>
+					)}
+					{isMember && (
+						<Link
+							to={`/club/${slug}/members`}
+							className={`grow text-center py-7 min-w-40   ${
+								lastNameInPath === "members"
+									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700 "
+									: ""
+							}`}
+						>
+							Members
+						</Link>
+					)}
 					<Link
 						to={`/club/${slug}/reviews`}
 						className={`grow text-center py-7 min-w-40   ${

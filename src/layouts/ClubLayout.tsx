@@ -14,7 +14,9 @@ export const ClubLayout = () => {
 	}
 	if (!slug) return;
 	// if (!slug || typeof !slug === "string" || Array.isArray(slug)) return;
-
+	React.useLayoutEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
 	const [clubDetails, setClubDetails] = useState<ClubDetails>();
 	useEffect(() => {
 		const fetchDetails = async () => {
@@ -31,7 +33,7 @@ export const ClubLayout = () => {
 	return (
 		<main className="flex flex-col min-h-screen w-full items-center">
 			<ClubHeader clubDetails={clubDetails} id={id} />
-			<ClubNav slug={slug} />
+
 			<Outlet />
 		</main>
 	);

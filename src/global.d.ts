@@ -1,4 +1,10 @@
 type clubTypes = "public" | "private";
+interface Filter {
+	category?: string;
+	rating?: string;
+	type?: string;
+	name?: string;
+}
 interface Club {
 	id: number;
 	name: string;

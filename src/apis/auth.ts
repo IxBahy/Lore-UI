@@ -34,7 +34,6 @@ export const login = async (data: {
 export const refreshToken = () => {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("refresh_token") : "";
-	console.log(token);
 	try {
 		if (token) {
 			fetch(baseUrl + "refresh-token", {
@@ -52,7 +51,6 @@ export const refreshToken = () => {
 					}
 				})
 				.then((data) => {
-					console.log(data);
 					if (data) {
 						localStorage.setItem("access_token", data.access);
 					}
