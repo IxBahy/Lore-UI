@@ -19,7 +19,6 @@ export const getClubDetails = async (id: string): Promise<ClubDetails> => {
 	if (res.status === 401) {
 		removeTokens();
 	}
-	refreshToken();
 	return res.json();
 };
 
@@ -36,7 +35,6 @@ export const getClubMembers = async (id: string): Promise<ClubMember[]> => {
 	if (res.status === 401 && token !== undefined) {
 		removeTokens();
 	}
-	refreshToken();
 	return res.json();
 };
 
@@ -53,6 +51,5 @@ export const getClubReviews = async (id: string): Promise<Review[]> => {
 	if (res.status === 401) {
 		removeTokens();
 	}
-	refreshToken();
 	return res.json();
 };

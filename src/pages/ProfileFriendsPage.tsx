@@ -5,9 +5,10 @@ export const ProfileFriendsPage = () => {
 	const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 	return (
 		<main>
-			<div className="grid gap-x-8 grid-cols-3 gap-y-4 my-6">
+			<div className="grid gap-x-8 grid-cols-3 gap-y-4 my-6 mx-8">
 				{array.map((item, index) => (
 					<MemberCard
+						key={index}
 						isFriendCard={true}
 						id={1}
 						email="sara.cruz@them.com"

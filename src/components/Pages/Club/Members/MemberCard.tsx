@@ -16,7 +16,7 @@ const MemberCard = ({
 }: Props) => {
 	return (
 		<>
-			<div className="flex flex-col grow items-center pb-5 mx-auto w-full font-semibold bg-white  rounded-lg leading-[120%] max-md:mt-7">
+			<div className="border border-[0.5px] flex flex-col grow items-center pb-5 mx-auto w-full font-semibold bg-white  rounded-lg leading-[120%] max-md:mt-7">
 				<img
 					loading="lazy"
 					srcSet={image}

@@ -13,20 +13,18 @@ const ClubHeader = ({
 }) => {
 	const { slug } = useParams();
 	if (!slug) return;
-	const [members, setMembers] = useState<ClubMember[]>([]);
 	const [isMember, setIsMember] = useState<boolean>(false);
 	useEffect(() => {
-		const check_if_memeber = (): boolean => {
-			const member = members?.filter((member) => member.id === id);
+		const check_if_memeber = (data: ClubMember[]): boolean => {
+			const member = data?.filter((member) => member.id === id);
 			if (member.length > 0) return true;
 			return false;
 		};
 		const fetchMembers = async () => {
 			const data = await getClubMembers(`${clubDetails.id}`);
-			setMembers(data);
+			setIsMember(check_if_memeber(data));
 		};
 		fetchMembers();
-		setIsMember(check_if_memeber());
 	}, []);
 
 	const handleJoinClub = async () => {
