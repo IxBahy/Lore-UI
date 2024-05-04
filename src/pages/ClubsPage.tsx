@@ -23,9 +23,13 @@ export const ClubsPage = () => {
 			setClubArray(data);
 			setTimeout(() => {}, 500);
 		};
-		fetchClubs();
+		const newTimeoutId = setTimeout(() => {
+			console.log("heheasad");
+			fetchClubs(); // Fetch data after the delay
+		}, 500);
 		setIsLoading(false);
-	}, []);
+		return () => clearTimeout(newTimeoutId);
+	}, [filter]);
 	if (!clubsArray) return;
 	return (
 		<>
