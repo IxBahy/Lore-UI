@@ -1,7 +1,10 @@
 import { removeTokens } from "@/lib/utils";
 import { refreshToken } from "./auth";
 const baseUrl: string = import.meta.env.VITE_HOST;
-export const getClubs = async (filter: Filter): Promise<Club[]> => {
+export const getClubs = async (
+	filter: Filter = {},
+	sortBy: SortBy = "created_at"
+): Promise<Club[]> => {
 	let query = "";
 	Object.entries(filter).forEach(([key, value]) => {
 		query = query + `${key}=${value}&`;

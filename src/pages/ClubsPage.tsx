@@ -15,11 +15,12 @@ import { useEffect, useState } from "react";
 export const ClubsPage = () => {
 	const [clubsArray, setClubArray] = useState<Club[] | undefined>();
 	const [filter, setFilter] = useState<Filter>({});
+	const [sortBy, setSortBy] = useState<SortBy>("current_capacity");
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	useEffect(() => {
 		setIsLoading(true);
 		const fetchClubs = async () => {
-			const data = await getClubs(filter);
+			const data = await getClubs(filter, sortBy);
 			setClubArray(data);
 			setTimeout(() => {}, 500);
 		};
@@ -29,7 +30,8 @@ export const ClubsPage = () => {
 		}, 500);
 		setIsLoading(false);
 		return () => clearTimeout(newTimeoutId);
-	}, [filter]);
+	}, [filter, sortBy]);
+
 	if (!clubsArray) return;
 	return (
 		<>

@@ -18,6 +18,8 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { ProfileLayout } from "./layouts/ProfileLayout";
 import { ProfileProgressPage } from "./pages/ProfileProgressPage";
 import { ProfileFriendsPage } from "./pages/ProfileFriendsPage";
+import { StudentLayout } from "./layouts/StudentLayout";
+import { StudentProfilePage } from "./pages/StudentProfilePage";
 function App() {
 	const router = createBrowserRouter([
 		{
@@ -59,7 +61,7 @@ function App() {
 					],
 				},
 				{
-					path: "/profile/:slug",
+					path: "/profile/",
 					element: <ProfileLayout />,
 					children: [
 						{
@@ -74,6 +76,24 @@ function App() {
 							path: "friends",
 							element: <ProfileFriendsPage />,
 						},
+					],
+				},
+				{
+					path: "/student/:slug",
+					element: <StudentLayout />,
+					children: [
+						{
+							path: "",
+							element: <StudentProfilePage />,
+						},
+						// {
+						// 	path: "progress",
+						// 	element: <ProfileProgressPage />,
+						// },
+						// {
+						// 	path: "friends",
+						// 	element: <ProfileFriendsPage />,
+						// },
 					],
 				},
 			],

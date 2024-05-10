@@ -16,18 +16,17 @@ const MemberCard = ({
 }: Props) => {
 	return (
 		<>
-			<div className="border border-[0.5px] flex flex-col grow items-center pb-5 mx-auto w-full font-semibold bg-white  rounded-lg leading-[120%] max-md:mt-7">
+			<div className="border-[0.5px] flex flex-col grow items-center pb-5 mx-auto w-full font-semibold bg-white  rounded-lg leading-[120%] max-md:mt-7">
 				<img
 					loading="lazy"
 					srcSet={image}
-					className="self-stretch w-full aspect-[1.89] rounded-lg"
+					className="self-stretch w-full aspect-[1.89] min-w-80 rounded-lg"
 					alt="Profile Image"
 				/>
 				<div className="mt-5 text-2xl whitespace-nowrap text-neutral-800">
 					{name}
 				</div>
 				<div className="mt-1 text-base whitespace-nowrap text-neutral-500">
-					<span className="text-neutral-500">@</span>{" "}
 					<span className="text-neutral-500">{email}</span>
 				</div>
 				<div className="flex gap-3.5 mt-9 text-xl text-center whitespace-nowrap">

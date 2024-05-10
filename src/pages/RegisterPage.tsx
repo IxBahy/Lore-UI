@@ -15,7 +15,7 @@ import { register } from "@/apis/auth";
 
 import { useToast } from "@/components/ui/use-toast";
 import { useAuthStore } from "@/store/zustand";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 interface SocialIconProps {
 	src: string;
 	alt: string;
@@ -50,10 +50,10 @@ const formSchema = z.object({
 
 export const RegisterPage = () => {
 	const { isAuthenticated } = useAuthStore();
-	// const router = useRouter();
-	// if (isAuthenticated || !!localStorage.getItem("access_token")) {
-	// 	router.push("/");
-	// }
+	const navigate = useNavigate();
+	if (isAuthenticated || !!localStorage.getItem("access_token")) {
+		navigate("/");
+	}
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -85,7 +85,7 @@ export const RegisterPage = () => {
 		} = values;
 		const res = await register(data);
 		if (res.ok) {
-			// router.push("/login");
+			navigate("/login");
 		} else {
 			toast({
 				variant: "destructive",
@@ -209,4 +209,3 @@ export const RegisterPage = () => {
 		</div>
 	);
 };
-

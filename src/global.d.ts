@@ -5,6 +5,7 @@ type Filter = {
 	type?: string;
 	name?: string;
 };
+type SortBy = "current_capacity" | "rating" | "created_at";
 interface Club {
 	id: number;
 	name: string;
@@ -12,6 +13,10 @@ interface Club {
 	type: clubTypes;
 	img_url: string;
 	owner: string;
+	category: string;
+	current_capacity: number;
+	created_at: string;
+	rating: number;
 }
 type RoadmapWeek = {
 	id: number;
@@ -75,3 +80,18 @@ interface Review {
 	club_id: number;
 	user_id: number;
 }
+type ClubProgress = {
+	name: string;
+	image: string;
+	progress: string;
+};
+
+type Friend = {
+	id: number;
+	email: string;
+	username: string;
+	img_url: string;
+	type: string;
+	first_name: string;
+	last_name: string;
+};

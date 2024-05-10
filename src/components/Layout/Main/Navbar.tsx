@@ -13,7 +13,6 @@ const Navbar = () => {
 		localStorage.removeItem("access_token");
 		localStorage.removeItem("refresh_token");
 		nav("/login");
-		
 	};
 	let location = useLocation();
 	const pathName = location.pathname.slice(1).split("/");
@@ -63,7 +62,7 @@ const Navbar = () => {
 							Join Book Club
 						</Link>
 						<Link
-							to={"/profile/1"}
+							to={"/profile"}
 							className={`font-bold ${
 								Array.isArray(pathName) && pathName.length > 0
 									? "text-teal-700"

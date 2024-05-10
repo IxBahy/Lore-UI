@@ -5,7 +5,9 @@ const Header = () => {
 	const { slug } = useParams();
 	let location = useLocation();
 	const pathName = location.pathname.split("/");
+
 	const lastNameInPath = pathName.pop();
+	console.log(lastNameInPath);
 	return (
 		<>
 			<header>
@@ -28,9 +30,9 @@ const Header = () => {
 				<div className="flex flex-col ml-16 max-w-full w-1/2">
 					<div className="flex gap-5  max-md:flex-wrap max-md:max-w-full">
 						<Link
-							to={`/profile/${slug}/`}
+							to={`/profile/`}
 							className={`grow text-center py-7 min-w-40   ${
-								pathName.length === 2
+								lastNameInPath === undefined || lastNameInPath === ""
 									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700 "
 									: ""
 							}`}
@@ -38,7 +40,7 @@ const Header = () => {
 							Clubs
 						</Link>
 						<Link
-							to={`/profile/${slug}/progress`}
+							to={`/profile/progress`}
 							className={`grow my-auto flex-auto  py-7 min-w-40 text-center ${
 								lastNameInPath === "progress"
 									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700"
@@ -49,7 +51,7 @@ const Header = () => {
 						</Link>
 
 						<Link
-							to={`/profile/${slug}/friends`}
+							to={`/profile/friends`}
 							className={`grow my-auto flex-auto py-7 min-w-40 text-center ${
 								lastNameInPath === "friends"
 									? "border-b-4 border-solid border-teal-700 font-semibold text-teal-700"
