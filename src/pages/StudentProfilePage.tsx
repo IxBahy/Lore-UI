@@ -11,7 +11,7 @@ export const StudentProfilePage = () => {
 	if (!token) {
 		navigate("/login");
 	}
-	const [clubsArray, setClubArray] = useState<Club[] | undefined>();
+	const [clubsArray, setClubArray] = useState<Club[] | undefined>([]);
 	const { slug } = useParams();
 	if (!slug) return;
 	const decoded = jwtDecode<
@@ -28,7 +28,7 @@ export const StudentProfilePage = () => {
 		};
 		fetchClubs();
 	}, []);
-	if (!clubsArray) return;
+	if (!Array.isArray(clubsArray) && !clubsArray) return;
 
 	return (
 		<>

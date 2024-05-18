@@ -59,7 +59,7 @@ const MemberCard = ({
 				</div>
 				<hr className="shrink-0 self-stretch mt-12 h-px bg-gray-200 max-md:mt-10" />
 				<Link
-					to={`#/ID HERE`}
+					to={`/student/${id}`}
 					className="mt-6 text-lg tracking-normal leading-7 text-center text-neutral-800"
 				>
 					View profile

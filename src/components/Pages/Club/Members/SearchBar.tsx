@@ -1,4 +1,10 @@
-const SearchBar = () => {
+import { Dispatch, SetStateAction } from "react";
+
+const SearchBar = ({
+	setMemberName,
+}: {
+	setMemberName: Dispatch<SetStateAction<string>>;
+}) => {
 	return (
 		<>
 			<label
@@ -14,6 +20,7 @@ const SearchBar = () => {
 					id="searchInput"
 					className="w-full h-full text-xl text-black"
 					placeholder="Search in your club members..."
+					onChange={(e) => setMemberName(e.target.value)}
 				/>
 			</label>
 		</>

@@ -3,7 +3,7 @@ import Card from "@/components/ui/Card";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const PopularClubs = () => {
-	const [clubsArray, setClubArray] = useState<Club[] | undefined>();
+	const [clubsArray, setClubArray] = useState<Club[] | undefined>([]);
 
 	useEffect(() => {
 		const fetchClubs = async () => {
@@ -12,7 +12,9 @@ const PopularClubs = () => {
 		};
 		fetchClubs();
 	}, []);
-	if (!clubsArray) return;
+
+	if (!Array.isArray(clubsArray) && !clubsArray) return;
+
 	return (
 		<>
 			<div className="flex flex-col px-20 py-12 mt-44 w-full bg-slate-400 bg-opacity-10 max-md:px-5 max-md:mt-10 max-md:max-w-full">

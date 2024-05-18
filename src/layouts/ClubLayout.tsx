@@ -35,7 +35,7 @@ export const ClubLayout = () => {
 		JwtPayload & { user_id: number; username: string; type: string }
 	>(token);
 	const id: number = decoded["user_id"];
-	console.log(id, ":::::::::::::::::::::::::::::::");
+
 
 	return (
 		<>

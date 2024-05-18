@@ -30,10 +30,13 @@ export const getClubDetails = async (id: string): Promise<ClubDetails> => {
 	return res.json();
 };
 
-export const getClubMembers = async (id: string): Promise<ClubMember[]> => {
+export const getClubMembers = async (
+	id: string,
+	name: string = ""
+): Promise<ClubMember[]> => {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
-	const res = await fetch(baseUrl + `club/${id}/members`, {
+	const res = await fetch(baseUrl + `club/${id}/members?name=${name}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",

@@ -82,6 +82,22 @@ export const addFriends = async (id: string): Promise<string> => {
 	return res.json();
 };
 
+export const removeFriends = async (id: string): Promise<string> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `student/friends?id=${id}`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};
+
 export const getFriends = async (): Promise<Friend[]> => {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";

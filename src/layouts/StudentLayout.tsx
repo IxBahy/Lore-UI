@@ -1,4 +1,4 @@
-import { addFriends, getFriends } from "@/apis/student";
+import { addFriends, getFriends, removeFriends } from "@/apis/student";
 import Header from "@/components/Pages/Profile/Header";
 import Loader from "@/components/ui/Loader";
 
@@ -16,25 +16,27 @@ export const StudentLayout = () => {
 		navigate("/login");
 	}
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [refresh, setRefresh] = useState<boolean>(false);
-	const [friends, setfriends] = useState<Friend[]>([]);
+	const [isFriend, setIsFriend] = useState<boolean>(false);
 	useEffect(() => {
 		setIsLoading(true);
 		const getUserFirendsList = async () => {
 			const res = await getFriends();
-			setfriends(res);
+			setIsFriend(!!res.find((friend) => String(friend.id) === slug));
 		};
 		getUserFirendsList();
 		// setTimeout(() => {}, 400);
 		setIsLoading(false);
-	}, [refresh]);
+	}, []);
 
 	const handleAddFriend = (): void => {
 		addFriends(slug);
-		setRefresh((refresh) => !refresh);
+		setIsFriend(true);
 	};
-	const isFriend = !!friends.find((friend) => String(friend.id) === slug);
-	console.log(isFriend, friends);
+	const handleRemoveFriend = (): void => {
+		removeFriends(slug);
+		setIsFriend(false);
+	};
+	// const isFriend = !!friends.find((friend) => String(friend.id) === slug);
 
 	return (
 		<>
@@ -60,19 +62,26 @@ export const StudentLayout = () => {
 					</header>
 					<nav className="flex flex-col z-10 sticky top-0 justify-evenly items-center px-16  w-full text-xl leading-6 whitespace-nowrap bg-slate-100 text-neutral-800 max-md:px-5 max-md:max-w-full">
 						<div className="flex flex-col ml-16 max-w-full w-full">
-							<div className="flex gap-5  max-md:flex-wrap w-full justify-evenly">
+							<div className="flex gap-5  max-md:flex-wrap w-full justify-end ">
 								<div
-									className={` text-center py-7 w-40 border-b-4 border-solid border-teal-700 font-semibold text-teal-700 `}
+									className={` text-center me-auto ms-64 py-7 w-40 border-b-4 border-solid border-teal-700 font-semibold text-teal-700 `}
 								>
 									Clubs
 								</div>
 								<div className="flex justify-center items-center ">
-									{!isFriend && (
+									{!isFriend ? (
 										<button
 											onClick={handleAddFriend}
 											className="mx-4 border border-green-700 min-w-16 px-6 rounded-sm bg-slate-50 h-1/2 transition-all duration-300 hover:bg-green-700 hover:text-gray-100"
 										>
 											Add Friend
+										</button>
+									) : (
+										<button
+											onClick={handleRemoveFriend}
+											className="mx-4 border border-red-700 min-w-16 px-6 rounded-sm bg-slate-50 h-1/2 transition-all duration-300 hover:bg-red-700 hover:text-gray-100"
+										>
+											Remove Friend
 										</button>
 									)}
 									<button className="mx-4 border border-blue-800 min-w-16 px-6 rounded-sm bg-slate-50 h-1/2 transition-all duration-300 hover:bg-blue-400 hover:text-gray-100">
