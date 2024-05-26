@@ -1,6 +1,7 @@
+// @ts-nocheck
 import React, { useCallback, useState } from "react";
 import Modal from "@/components/Modal";
-import { z } from "zod";
+import { set, z } from "zod";
 import {
 	Form,
 	FormControl,
@@ -9,51 +10,155 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { Control, useForm } from "react-hook-form";
+import {
+	Control,
+	UseFormRegisterReturn,
+	UseFormReturn,
+	useFieldArray,
+	useForm,
+} from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { StepButton, Stepper } from "@mui/material";
 import Step from "@mui/material/Step";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { JwtPayload, jwtDecode } from "jwt-decode";
+import { addClubArticle, createClubs } from "@/apis/club";
+import { Button } from "@/components/ui/button";
+
 interface Props {
 	show: boolean;
 	setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const steps = ["", "", "", "", ""];
 
+const steps = ["", "", "", "", "", ""];
+// resume the pattern until number 4 is reached
+const map_week = {
+	1: "first",
+	2: "second",
+	3: "third",
+	4: "fourth",
+};
 const CreateClubForm = ({ show, setShow }: Props) => {
-	const [currentStep, setCurrentStep] = useState(0);
-
+	const [currentStep, setCurrentStep] = useState(4);
+	const [createdClub, setCreatedClub] = useState<Club>();
+	const token = localStorage.getItem("access_token");
+	if (!token) return;
+	const decoded = jwtDecode<
+		JwtPayload & { user_id: number; username: string; type: string }
+	>(token);
+	const id: number = decoded["user_id"];
 	const formSchema = z.object({
 		name: z.string(),
 		description: z.string(),
 		type: z.string(),
-		img_url: z.string().url(), // You might want to ensure it's a valid URL
+		img_url: z.string(), // You might want to ensure it's a valid URL
 		category: z.string(),
-		current_capacity: z.number().int().min(0).max(2147483647),
-		max_capacity: z.number().int().min(0).max(2147483647),
+		current_capacity: z.number().int().min(0).max(50),
+		max_capacity: z.number().int().min(0).max(50),
 		owner: z.number().int().min(0), // Assuming owner ID should be non-negative
 		rating: z.number().int().min(0).max(5), // Assuming rating is between 0 and 5
+	});
+	const fileSchema = z.object({
+		file: z.instanceof(FileList),
+		title: z.string(),
+		description: z.string(),
+		cover_url: z.string(),
+	});
+
+	// make it 8 for premuime
+	const week_schema = z.object({
+		degree: z.number().max(4),
+		title: z.string(),
+		description: z.string(),
+	});
+	const roadmapSchema = z.object({
+		weeks_capacity: z.number().max(4),
+		weeks: z.array(week_schema),
 	});
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			name: "",
+			current_capacity: 0,
+			max_capacity: 50,
+			img_url: `https://source.unsplash.com/random/300x200?sig=${Math.random()}`,
+			rating: 0,
+			owner: id,
 		},
 	});
-	const handleForwardStep = () => {
-		setCurrentStep((prev) => prev + 1);
-	};
-	function onSubmit(values: z.infer<typeof formSchema>) {
+	const fileForm = useForm<z.infer<typeof fileSchema>>({
+		resolver: zodResolver(fileSchema),
+		defaultValues: {
+			cover_url: `https://source.unsplash.com/random/300x200?sig=${Math.random()}`,
+		},
+	});
+	const fileRef = fileForm.register("file");
+
+	const roadmapForm = useForm<z.infer<typeof roadmapSchema>>({
+		resolver: zodResolver(fileSchema),
+		defaultValues: {
+			weeks_capacity: 4,
+			weeks: [],
+		},
+	});
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { errors },
+	} = roadmapForm;
+	const { fields, append, remove } = useFieldArray({
+		control: roadmapForm.control,
+		name: "weeks",
+	});
+	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
+		const formData = new FormData();
+		formData.append("name", values.name);
+		formData.append("description", values.description);
+		formData.append("type", values.type);
+		formData.append("img_url", values.img_url);
+		formData.append("category", values.category);
+		formData.append("current_capacity", String(values.current_capacity));
+		formData.append("max_capacity", String(values.max_capacity));
+		formData.append("owner", String(values.owner));
+		formData.append("rating", String(values.rating));
+
+		const club_id = await createClubs(formData);
+		if (club_id) {
+			setCreatedClub(club_id);
+			setCurrentStep((prev) => prev + 1);
+		}
+	};
+	const onFileSubmit = async (values: z.infer<typeof fileSchema>) => {
+		const formData = new FormData();
+		formData.append("title", values.title);
+		formData.append("description", values.description);
+		formData.append("cover_url", values.cover_url);
+		if (createdClub) {
+			const file = values.file[0];
+			formData.append("article", file);
+
+			formData.append("club_id", String(createdClub.id));
+			const res = await addClubArticle(formData);
+			if (res === "File uploaded") {
+				handleClose();
+			}
+		}
+	};
+	const addWeek = () => {
+		append({ title: "", description: "", degree: fields.length + 1 });
+	};
+	const onRoadmapSubmit = async (values: z.infer<typeof roadmapSchema>) => {
 		console.log(values);
-	}
+	};
 	const handleClose = useCallback(() => {
 		setShow(false);
 		form.reset();
 		setTimeout(() => {
 			setCurrentStep(0);
+			setCreatedClub(undefined);
 		}, 200);
 	}, []);
 	const handleStep = (index: number) => {
@@ -128,6 +233,87 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 									)}
 								</form>
 							</Form>
+							{currentStep >= 2 && currentStep < 4 && (
+								<Form {...fileForm}>
+									<form
+										onSubmit={fileForm.handleSubmit(onFileSubmit)}
+										className="flex flex-col px-16 w-full text-xl font-semibold leading-6 text-neutral-800 max-md:px-5 max-md:mt-10 max-md:max-w-full"
+									>
+										{currentStep === 2 && (
+											<ThirdForm
+												control={fileForm.control}
+												setCurrentStep={setCurrentStep}
+											/>
+										)}
+										{currentStep === 3 && (
+											<FourthForm
+												control={fileForm.control}
+												fileRef={fileRef}
+											/>
+										)}
+									</form>
+								</Form>
+							)}
+							{currentStep === 4 && (
+								<Form {...fileForm}>
+									<form
+										onSubmit={roadmapForm.handleSubmit(onRoadmapSubmit)}
+										className="flex flex-col px-16 w-full text-xl font-semibold leading-6 text-neutral-800 max-md:px-5 max-md:mt-10 max-md:max-w-full"
+									>
+										{fields.map((field, index) => {
+											return (
+												<>
+													<div key={field.id} style={{ marginBottom: "10px" }}>
+														<Input
+															type="number"
+															title={`Week ${index + 1} - Degree`}
+															{...register(`weeks.${index}.degree`)}
+														/>
+														{errors.weeks &&
+															errors.weeks[index] &&
+															errors.weeks[index].degree && (
+																<span>
+																	{errors.weeks[index].degree.message}
+																</span>
+															)}
+														<Input
+															type="text"
+															title={`Week ${map_week[index + 1]} - Title`}
+															{...register(`weeks.${index}.title`)}
+														/>
+														{errors.weeks &&
+															errors.weeks[index] &&
+															errors.weeks[index].title && (
+																<span>{errors.weeks[index].title.message}</span>
+															)}
+														<Input
+															type="text"
+															title={`Week ${index + 1} - Description`}
+															{...register(`weeks.${index}.description`)}
+														/>
+														{errors.weeks &&
+															errors.weeks[index] &&
+															errors.weeks[index].description && (
+																<span>
+																	{errors.weeks[index].description.message}
+																</span>
+															)}
+														<Button type="button" onClick={() => remove(index)}>
+															Remove Week
+														</Button>
+													</div>
+												</>
+											);
+										})}
+										{fields.length < 4 && (
+											<Button type="button" onClick={addWeek}>
+												Add Week
+											</Button>
+										)}
+										<Button type="submit">Submit</Button>
+									</form>
+								</Form>
+							)}
 						</div>
 						{/* <SecondForm /> */}
 					</section>
@@ -152,6 +338,19 @@ interface SubFormProps {
 			max_capacity: number;
 			owner: number;
 			rating: number;
+			file?: FileList | undefined;
+		},
+		any
+	>;
+}
+interface fileFormProps {
+	fileRef?: UseFormRegisterReturn<"file">;
+	control: Control<
+		{
+			file: FileList;
+			description: string;
+			title: string;
+			cover_url: string;
 		},
 		any
 	>;
@@ -159,7 +358,7 @@ interface SubFormProps {
 
 const FirstForm = ({ setCurrentStep, control }: SubFormProps) => {
 	return (
-		<form className="flex flex-col px-16 w-full text-xl font-semibold leading-6 text-neutral-800 max-md:px-5 max-md:mt-10 max-md:max-w-full">
+		<>
 			<FormField
 				control={control}
 				name="name"
@@ -170,6 +369,7 @@ const FirstForm = ({ setCurrentStep, control }: SubFormProps) => {
 							<Input
 								className="justify-center items-start py-3 pr-3 pl-6 mt-3 text-base rounded-md border border-teal-700 border-solid text-neutral-400 max-md:px-5 max-md:mr-0.5 max-md:max-w-full"
 								placeholder="Enter club name"
+								defaultValue={""}
 								{...field}
 							/>
 						</FormControl>
@@ -228,21 +428,11 @@ const FirstForm = ({ setCurrentStep, control }: SubFormProps) => {
 					alt=""
 				/>
 			</button>
-		</form>
+		</>
 	);
 };
 
 const SecondForm = ({ setCurrentStep, control }: SubFormProps) => {
-	const items = [
-		{
-			id: "recents",
-			label: "Recents",
-		},
-		{
-			id: "home",
-			label: "Home",
-		},
-	] as const;
 	return (
 		<>
 			<FormField
@@ -278,10 +468,88 @@ const SecondForm = ({ setCurrentStep, control }: SubFormProps) => {
 
 			<button
 				className="flex gap-1 justify-center self-end px-10 py-4 mt-6 text-white bg-teal-700 rounded-md max-md:px-5"
+				type="submit"
+			>
+				Create?
+				<img
+					loading="lazy"
+					src="https://cdn.builder.io/api/v1/image/assets/TEMP/9ed5507f7992a14d6253238d8924de1dd4447b0b74cdcbbc3e337e15c4490617?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
+					className="shrink-0 w-6 aspect-square"
+					alt=""
+				/>
+			</button>
+		</>
+	);
+};
+// File Forms
+const ThirdForm = ({
+	control,
+	setCurrentStep,
+}: fileFormProps & {
+	setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+}) => {
+	return (
+		<>
+			<FormField
+				control={control}
+				name="title"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>article title</FormLabel>
+						<FormControl>
+							<Input
+								className="justify-center items-start py-3 pr-3 pl-6 mt-3 text-base rounded-md border border-teal-700 border-solid text-neutral-400 max-md:px-5 max-md:mr-0.5 max-md:max-w-full"
+								placeholder="Enter article title"
+								defaultValue={""}
+								{...field}
+							/>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+
+			<FormField
+				control={control}
+				name="description"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>Description</FormLabel>
+						<FormControl>
+							<Input
+								className="justify-center items-start py-3 pr-3 pl-6 mt-3 text-base rounded-md border border-teal-700 border-solid text-neutral-400 max-md:px-5 max-md:mr-0.5 max-md:max-w-full"
+								placeholder="Enter description"
+								{...field}
+							/>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+
+			<FormField
+				control={control}
+				name="cover_url"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>Genre</FormLabel>
+						<FormControl>
+							<Input
+								className="justify-center items-start py-3 pr-3 pl-6 mt-3 text-base rounded-md border border-teal-700 border-solid text-neutral-400 max-md:px-5 max-md:mr-0.5 max-md:max-w-full"
+								placeholder="Enter the article cover image"
+								{...field}
+							/>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<button
+				className="flex gap-1 justify-center self-end px-10 py-4 mt-6 text-white bg-teal-700 rounded-md max-md:px-5"
+				type="button"
 				onClick={() => {
 					setCurrentStep((prev) => prev + 1);
 				}}
-				type="button"
 			>
 				Next Step
 				<img
@@ -291,6 +559,93 @@ const SecondForm = ({ setCurrentStep, control }: SubFormProps) => {
 					alt=""
 				/>
 			</button>
+		</>
+	);
+};
+
+const FourthForm = ({ control, fileRef }: fileFormProps) => {
+	return (
+		<>
+			<FormField
+				control={control}
+				name="file"
+				render={({ field }) => {
+					return (
+						<FormItem>
+							<FormLabel>File</FormLabel>
+							<FormControl>
+								<Input type="file" placeholder="article" {...fileRef} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					);
+				}}
+			/>
+			<button
+				className="flex gap-1 justify-center self-end px-10 py-4 mt-6 text-white bg-teal-700 rounded-md max-md:px-5"
+				type="submit"
+			>
+				Attach To Club
+				<img
+					loading="lazy"
+					src="https://cdn.builder.io/api/v1/image/assets/TEMP/9ed5507f7992a14d6253238d8924de1dd4447b0b74cdcbbc3e337e15c4490617?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
+					className="shrink-0 w-6 aspect-square"
+					alt=""
+				/>
+			</button>
+		</>
+	);
+};
+
+interface RoadmapFormProps {
+	control: Control<
+		{
+			weeks_capacity: number;
+			weeks: {
+				degree: number;
+				title: string;
+				description: string;
+			}[];
+		},
+		any
+	>;
+}
+
+interface WeekFormProps {
+	control: Control<
+		{
+			weeks_capacity: number;
+			weeks: {
+				description: string;
+				title: string;
+				degree: number;
+			}[];
+		},
+		any
+	>;
+}
+// Roadmap Form
+const WeekFormComponent = ({ control }: WeekFormProps) => {
+	return (
+		<>
+			<FormField
+				control={control}
+				name="name"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>Club Name</FormLabel>
+						<FormControl>
+							<Input
+								className="justify-center items-start py-3 pr-3 pl-6 mt-3 text-base rounded-md border border-teal-700 border-solid text-neutral-400 max-md:px-5 max-md:mr-0.5 max-md:max-w-full"
+								placeholder="Enter club name"
+								defaultValue={""}
+								{...field}
+							/>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
 		</>
 	);
 };

@@ -16,6 +16,9 @@ import { register } from "@/apis/auth";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuthStore } from "@/store/zustand";
 import { Link, useNavigate } from "react-router-dom";
+
+
+
 interface SocialIconProps {
 	src: string;
 	alt: string;
