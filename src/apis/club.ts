@@ -82,7 +82,7 @@ export const createClubs = async (data: FormData): Promise<Club> => {
 export const createClubRoadmap = async (
 	data: FormData,
 	id: string
-): Promise<Response> => {
+): Promise<string> => {
 	const token =
 		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
 	const res = await fetch(baseUrl + `club/${id}/roadmap`, {
@@ -92,7 +92,7 @@ export const createClubRoadmap = async (
 		},
 		body: data,
 	});
-	return res;
+	return res.json();
 };
 
 // PUT REQUESTS

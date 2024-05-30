@@ -31,7 +31,7 @@ interface Props {
 	setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const steps = ["", "", "", "", "", ""];
+const steps = ["", "", "", "", ""];
 // resume the pattern until number 4 is reached
 const map_week = {
 	1: "first",
@@ -140,12 +140,15 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 		formData.append("cover_url", values.cover_url);
 		if (createdClub) {
 			const file = values.file[0];
-			formData.append("article", file);
+			console.log("here is ", file);
+
+			formData.append("document", file);
+			console.log(createdClub.id, "::::::::");
 
 			formData.append("club_id", String(createdClub.id));
 			const res = await addClubArticle(formData);
 			if (res === "File uploaded") {
-				handleClose();
+				setCurrentStep((prev) => prev + 1);
 			}
 		}
 	};
@@ -161,7 +164,7 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 			const res = await createClubRoadmap(formData, String(createdClub.id));
 			console.log(res);
 
-			if ((res === res.status) === 200) {
+			if (res === "Roadmap created") {
 				handleClose();
 			}
 		}
@@ -169,6 +172,8 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 	const handleClose = useCallback(() => {
 		setShow(false);
 		form.reset();
+		fileForm.reset();
+		roadmapForm.reset();
 		setTimeout(() => {
 			setCurrentStep(0);
 			setCreatedClub(undefined);
