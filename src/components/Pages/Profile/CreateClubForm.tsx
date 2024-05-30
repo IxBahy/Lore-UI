@@ -23,7 +23,7 @@ import { StepButton, Stepper } from "@mui/material";
 import Step from "@mui/material/Step";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { JwtPayload, jwtDecode } from "jwt-decode";
-import { addClubArticle, createClubs } from "@/apis/club";
+import { addClubArticle, createClubRoadmap, createClubs } from "@/apis/club";
 import { Button } from "@/components/ui/button";
 
 interface Props {
@@ -40,7 +40,7 @@ const map_week = {
 	4: "fourth",
 };
 const CreateClubForm = ({ show, setShow }: Props) => {
-	const [currentStep, setCurrentStep] = useState(4);
+	const [currentStep, setCurrentStep] = useState(0);
 	const [createdClub, setCreatedClub] = useState<Club>();
 	const token = localStorage.getItem("access_token");
 	if (!token) return;
@@ -68,12 +68,12 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 
 	// make it 8 for premuime
 	const week_schema = z.object({
-		degree: z.number().max(4),
+		degree: z.number().min(1).max(4),
 		title: z.string(),
 		description: z.string(),
 	});
 	const roadmapSchema = z.object({
-		weeks_capacity: z.number().max(4),
+		weeks_capacity: z.number().min(1).max(4).optional(),
 		weeks: z.array(week_schema),
 	});
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -95,7 +95,7 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 	const fileRef = fileForm.register("file");
 
 	const roadmapForm = useForm<z.infer<typeof roadmapSchema>>({
-		resolver: zodResolver(fileSchema),
+		resolver: zodResolver(roadmapSchema),
 		defaultValues: {
 			weeks_capacity: 4,
 			weeks: [],
@@ -107,10 +107,12 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 		control,
 		formState: { errors },
 	} = roadmapForm;
+
 	const { fields, append, remove } = useFieldArray({
 		control: roadmapForm.control,
 		name: "weeks",
 	});
+
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
@@ -151,7 +153,18 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 		append({ title: "", description: "", degree: fields.length + 1 });
 	};
 	const onRoadmapSubmit = async (values: z.infer<typeof roadmapSchema>) => {
-		console.log(values);
+		values.weeks_capacity = fields.length;
+		const formData = new FormData();
+		formData.append("weeks_capacity", values["weeks_capacity"]);
+		formData.append("weeks", JSON.stringify({ value: values["weeks"] }));
+		if (createdClub) {
+			const res = await createClubRoadmap(formData, String(createdClub.id));
+			console.log(res);
+
+			if ((res === res.status) === 200) {
+				handleClose();
+			}
+		}
 	};
 	const handleClose = useCallback(() => {
 		setShow(false);
@@ -182,7 +195,7 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 				show={show}
 				handleClose={handleClose}
 			>
-				<div className="min-w-[600px] min-h-[400px] ">
+				<div className="min-w-[600px] min-h-[400px] max-h-[400px] overflow-auto ">
 					<section className="flex flex-col pt-7 pb-16 bg-white max-w-[756px]">
 						<header className="flex gap-5 items-start self-center w-full max-w-[551px] max-md:flex-wrap max-md:max-w-full">
 							<img
@@ -255,62 +268,85 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 								</Form>
 							)}
 							{currentStep === 4 && (
-								<Form {...fileForm}>
+								<Form {...roadmapForm}>
 									<form
 										onSubmit={roadmapForm.handleSubmit(onRoadmapSubmit)}
 										className="flex flex-col px-16 w-full text-xl font-semibold leading-6 text-neutral-800 max-md:px-5 max-md:mt-10 max-md:max-w-full"
 									>
-										{fields.map((field, index) => {
-											return (
-												<>
-													<div key={field.id} style={{ marginBottom: "10px" }}>
-														<Input
-															type="number"
-															title={`Week ${index + 1} - Degree`}
-															{...register(`weeks.${index}.degree`)}
-														/>
-														{errors.weeks &&
-															errors.weeks[index] &&
-															errors.weeks[index].degree && (
-																<span>
-																	{errors.weeks[index].degree.message}
-																</span>
-															)}
-														<Input
-															type="text"
-															title={`Week ${map_week[index + 1]} - Title`}
-															{...register(`weeks.${index}.title`)}
-														/>
-														{errors.weeks &&
-															errors.weeks[index] &&
-															errors.weeks[index].title && (
-																<span>{errors.weeks[index].title.message}</span>
-															)}
-														<Input
-															type="text"
-															title={`Week ${index + 1} - Description`}
-															{...register(`weeks.${index}.description`)}
-														/>
-														{errors.weeks &&
-															errors.weeks[index] &&
-															errors.weeks[index].description && (
-																<span>
-																	{errors.weeks[index].description.message}
-																</span>
-															)}
-														<Button type="button" onClick={() => remove(index)}>
-															Remove Week
-														</Button>
+										<h3 className="mt-4">Create RoadMap</h3>
+										<div>
+											{fields.map((field, index) => {
+												return (
+													<div key={field.id} className=" my-4">
+														<div className="flex  items-center ">
+															<label
+																htmlFor={`week_${index + 1}_title`}
+																className="text-xs pe-1 min-w-16 max-w-16"
+															>
+																index
+															</label>
+															<Input
+																type="number"
+																className="my-2"
+																title={`Week ${index + 1} index`}
+																{...register(`weeks.${index}.degree`)}
+																disabled={true}
+															/>
+														</div>
+														<div className="flex  items-center ">
+															<label
+																htmlFor={`week_${index + 1}_title`}
+																className="text-xs pe-1 min-w-16 max-w-16"
+															>
+																Title
+															</label>
+															<Input
+																id={`week_${index + 1}_title`}
+																className="my-2"
+																type="text"
+																title={`Week ${map_week[index + 1]} - Title`}
+																{...register(`weeks.${index}.title`)}
+															/>
+														</div>
+														<div className="flex  items-center">
+															<label
+																htmlFor={`week_${index + 1}desc`}
+																className="text-xs pe-1 min-w-16 max-w-16"
+															>
+																Description
+															</label>
+															<Input
+																type="text"
+																id={`week_${index + 1}desc`}
+																className="my-2"
+																title={`Week ${index + 1} - Description`}
+																{...register(`weeks.${index}.description`)}
+															/>
+														</div>
+														{fields.length === index + 1 && (
+															<Button
+																type="button"
+																onClick={() => remove(index)}
+															>
+																Remove Week
+															</Button>
+														)}
 													</div>
-												</>
-											);
-										})}
-										{fields.length < 4 && (
-											<Button type="button" onClick={addWeek}>
-												Add Week
-											</Button>
-										)}
-										<Button type="submit">Submit</Button>
+												);
+											})}
+										</div>
+										<div className="mt-4 w-full flex  items-end justify-end ">
+											{fields.length < 4 && (
+												<Button
+													className="mx-4"
+													type="button"
+													onClick={addWeek}
+												>
+													Add Week
+												</Button>
+											)}
+											<Button type="submit">Submit</Button>
+										</div>
 									</form>
 								</Form>
 							)}
@@ -532,7 +568,7 @@ const ThirdForm = ({
 				name="cover_url"
 				render={({ field }) => (
 					<FormItem>
-						<FormLabel>Genre</FormLabel>
+						<FormLabel>cover_url</FormLabel>
 						<FormControl>
 							<Input
 								className="justify-center items-start py-3 pr-3 pl-6 mt-3 text-base rounded-md border border-teal-700 border-solid text-neutral-400 max-md:px-5 max-md:mr-0.5 max-md:max-w-full"

@@ -79,6 +79,22 @@ export const createClubs = async (data: FormData): Promise<Club> => {
 	return res.json();
 };
 
+export const createClubRoadmap = async (
+	data: FormData,
+	id: string
+): Promise<Response> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `club/${id}/roadmap`, {
+		method: "POST",
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+		body: data,
+	});
+	return res;
+};
+
 // PUT REQUESTS
 export const addClubArticle = async (data: FormData): Promise<string> => {
 	const token =

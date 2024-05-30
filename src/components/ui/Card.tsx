@@ -28,7 +28,7 @@ const Card = ({ club }: CardProps) => {
 		fetchMembers();
 	}, []);
 	return (
-		<div className="border flex flex-col px-2.5 pt-2.5   pb-5 w-full bg-white rounded-xl shadow-sm">
+		<div className="border flex flex-col px-2.5 pt-2.5  max-h-[400px]  pb-5 w-full bg-white rounded-xl shadow-sm">
 			<img
 				src={club.img_url}
 				alt={club.name}
