@@ -95,3 +95,23 @@ type Friend = {
 	first_name: string;
 	last_name: string;
 };
+
+type ClubDocument = {
+	id: number;
+	uploaded_at: string;
+	description: string;
+	title: string;
+	cover_url: string;
+	club_id: number;
+};
+
+type RoadmapWeekProgress = {
+	id: number;
+	title: string;
+	description: string;
+	degree: number;
+	is_completed: boolean;
+	is_in_progress: boolean;
+};
+
+type RoadmapProgress = RoadmapWeekProgress[];

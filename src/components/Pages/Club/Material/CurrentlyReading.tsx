@@ -1,4 +1,23 @@
+import { getClubDocument, getClubOwner } from "@/apis/club";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 const CurrentlyReading = () => {
+	const { slug } = useParams();
+	if (!slug) return;
+	const [document, setDocument] = useState<ClubDocument>();
+	const [owner, setOwner] = useState<Friend>();
+
+	useEffect(() => {
+		const fetchDocument = async () => {
+			const res = await getClubDocument(slug);
+			setDocument(res);
+			const owner = await getClubOwner(slug);
+			setOwner(owner);
+		};
+		fetchDocument();
+	}, []);
+	if (!document || !owner) return;
 	return (
 		<div className="flex flex-col self-center px-5 mt-24 w-full max-w-[1410px] max-md:mt-10 max-md:max-w-full">
 			<div className="flex gap-5 justify-between items-start pr-20 max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
@@ -24,7 +43,7 @@ const CurrentlyReading = () => {
 					<div className="flex flex-col w-1/5 max-md:ml-0 max-md:w-full">
 						<img
 							loading="lazy"
-							srcSet="https://cdn.builder.io/api/v1/image/assets/TEMP/4da03a00611fa16003c877ab278ab09dde12e8d1fe9c9142c793fae26ecd0413?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=100 100w, https://cdn.builder.io/api/v1/image/assets/TEMP/4da03a00611fa16003c877ab278ab09dde12e8d1fe9c9142c793fae26ecd0413?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=200 200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4da03a00611fa16003c877ab278ab09dde12e8d1fe9c9142c793fae26ecd0413?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=400 400w, https://cdn.builder.io/api/v1/image/assets/TEMP/4da03a00611fa16003c877ab278ab09dde12e8d1fe9c9142c793fae26ecd0413?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=800 800w, https://cdn.builder.io/api/v1/image/assets/TEMP/4da03a00611fa16003c877ab278ab09dde12e8d1fe9c9142c793fae26ecd0413?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1200 1200w, https://cdn.builder.io/api/v1/image/assets/TEMP/4da03a00611fa16003c877ab278ab09dde12e8d1fe9c9142c793fae26ecd0413?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=1600 1600w, https://cdn.builder.io/api/v1/image/assets/TEMP/4da03a00611fa16003c877ab278ab09dde12e8d1fe9c9142c793fae26ecd0413?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&width=2000 2000w, https://cdn.builder.io/api/v1/image/assets/TEMP/4da03a00611fa16003c877ab278ab09dde12e8d1fe9c9142c793fae26ecd0413?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
+							srcSet={document?.cover_url}
 							className="z-10 self-stretch my-auto max-w-full aspect-[0.7] w-[299px] max-md:mt-7"
 						/>
 					</div>
@@ -37,7 +56,7 @@ const CurrentlyReading = () => {
 										src="https://cdn.builder.io/api/v1/image/assets/TEMP/0c3e0c419a15db32d668959b18288326b90553497faad847858b5c388ce52909?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
 										className="w-6 aspect-square"
 									/>
-									<div className="grow">20+ Students</div>
+									<div className="grow">Current</div>
 								</div>
 								<div className="flex gap-2.5 justify-between">
 									<img
@@ -52,18 +71,13 @@ const CurrentlyReading = () => {
 								</div>
 							</div>
 							<div className="mt-3 text-3xl font-medium leading-9 text-neutral-800 max-md:max-w-full">
-								The wig “ A Hairbrained History”
+								{document?.title}
 							</div>
 							<div className="mt-3 text-lg font-semibold leading-5 text-neutral-500 max-md:max-w-full">
 								Description
 							</div>
 							<div className="mt-1.5 text-base leading-5 text-neutral-500 w-[753px] max-md:max-w-full">
-								Embark on an enthralling journey through the corridors of time
-								with &quot;Echoes of Ages Past.&quot; This meticulously
-								researched and beautifully narrated history book invites readers
-								to explore the tapestry of human history, weaving together the
-								forgotten tales, untold stories, and pivotal moments that have
-								shaped our world.
+								{document?.description}
 								<br />
 							</div>
 							<div className="flex gap-5 justify-between self-start pr-8 mt-2 ml-36 text-sm tracking-normal leading-6 text-neutral-800 max-md:flex-wrap max-md:pr-5 max-md:max-w-full">
@@ -74,14 +88,11 @@ const CurrentlyReading = () => {
 										className="self-stretch w-6 aspect-square"
 									/>
 									<div className="self-stretch my-auto font-bold">4.5</div>
-									<div className="grow self-stretch my-auto font-medium text-center underline">
-										(2,540 Reviews)
-									</div>
 								</div>
 								<div className="flex gap-1 px-px my-auto">
 									<div className="grow whitespace-nowrap">Published By</div>
 									<div className="my-auto font-medium underline">
-										Sloan Natoli
+										{owner?.first_name + "  " + owner?.last_name}
 									</div>
 									<img
 										loading="lazy"

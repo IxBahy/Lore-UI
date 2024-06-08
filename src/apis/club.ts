@@ -65,6 +65,37 @@ export const getClubReviews = async (id: string): Promise<Review[]> => {
 	return res.json();
 };
 
+export const getClubDocument = async (id: string): Promise<ClubDocument> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `club/${id}/document`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};
+export const getClubOwner = async (id: string): Promise<Friend> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `club/${id}/owner`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};
+
 // POST REQUESTS
 export const createClubs = async (data: FormData): Promise<Club> => {
 	const token =

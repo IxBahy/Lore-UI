@@ -113,3 +113,92 @@ export const getFriends = async (): Promise<Friend[]> => {
 	}
 	return res.json();
 };
+
+export const getRoadmapProgress = async (
+	club_id: string
+): Promise<RoadmapProgress> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `student/roadmap/${club_id}`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};
+
+export const moveWeekToInProgress = async (
+	week_id: string
+): Promise<string> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `student/${week_id}/progress`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};
+export const deleteWeekToInProgress = async (
+	week_id: string
+): Promise<string> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `student/${week_id}/progress`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};
+
+export const moveWeekToInCompleted = async (
+	week_id: string
+): Promise<string> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `student/${week_id}/complete`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};
+
+export const deleteWeekToInCompleted = async (
+	week_id: string
+): Promise<string> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `student/${week_id}/complete`, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};

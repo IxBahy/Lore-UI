@@ -31,6 +31,7 @@ interface Props {
 	setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const random_rate = Math.round(Math.random() * 50) / 10;
 const steps = ["", "", "", "", ""];
 // resume the pattern until number 4 is reached
 const map_week = {
@@ -57,7 +58,7 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 		current_capacity: z.number().int().min(0).max(50),
 		max_capacity: z.number().int().min(0).max(50),
 		owner: z.number().int().min(0), // Assuming owner ID should be non-negative
-		rating: z.number().int().min(0).max(5), // Assuming rating is between 0 and 5
+		rating: z.number().min(0.0).max(5.0), // Assuming rating is between 0 and 5
 	});
 	const fileSchema = z.object({
 		file: z.instanceof(FileList),
@@ -82,14 +83,14 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 			current_capacity: 0,
 			max_capacity: 50,
 			img_url: `https://source.unsplash.com/random/300x200?sig=${Math.random()}`,
-			rating: 0,
+			rating: random_rate,
 			owner: id,
 		},
 	});
 	const fileForm = useForm<z.infer<typeof fileSchema>>({
 		resolver: zodResolver(fileSchema),
 		defaultValues: {
-			cover_url: `https://source.unsplash.com/random/300x200?sig=${Math.random()}`,
+			cover_url: `https://source.unsplash.com/random/400x600?sig=${Math.random()}`,
 		},
 	});
 	const fileRef = fileForm.register("file");
@@ -114,8 +115,8 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 	});
 
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
-		// Do something with the form values.
-		// ✅ This will be type-safe and validated.
+		console.log(values);
+
 		const formData = new FormData();
 		formData.append("name", values.name);
 		formData.append("description", values.description);
@@ -200,7 +201,7 @@ const CreateClubForm = ({ show, setShow }: Props) => {
 				show={show}
 				handleClose={handleClose}
 			>
-				<div className="min-w-[600px] min-h-[400px] max-h-[400px] overflow-auto ">
+				<div className="min-w-[600px] min-h-[500px] max-h-[500px] overflow-auto ">
 					<section className="flex flex-col pt-7 pb-16 bg-white max-w-[756px]">
 						<header className="flex gap-5 items-start self-center w-full max-w-[551px] max-md:flex-wrap max-md:max-w-full">
 							<img

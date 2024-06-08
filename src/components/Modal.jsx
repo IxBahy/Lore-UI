@@ -37,7 +37,7 @@ function Modal({ children, id, ariaLabel, show, handleClose }) {
 		<>
 			{/* Modal backdrop */}
 			<Transition
-				className="fixed inset-0 z-50 bg-black bg-opacity-75 transition-opacity "
+				className="fixed inset-0 z-50 bg-black bg-opacity-75 transition-opacity w-full"
 				show={show}
 				enter="transition ease-out duration-200"
 				enterStart="opacity-0"
@@ -51,7 +51,7 @@ function Modal({ children, id, ariaLabel, show, handleClose }) {
 			{/* Modal dialog */}
 			<Transition
 				id={id}
-				className="fixed inset-0 z-50 overflow-hidden flex items-center justify-center px-4 sm:px-6 h-screen sm:block sm:p-0  "
+				className="absolute inset-0 z-50 overflow-hidden flex items-start w-full  justify-center px-4 sm:px-6 h-screen sm:block sm:p-0  "
 				role="dialog"
 				aria-modal="true"
 				aria-labelledby={ariaLabel}
@@ -67,7 +67,7 @@ function Modal({ children, id, ariaLabel, show, handleClose }) {
 				<div className="fixed z-10 inset-0">
 					<div
 						ref={modalBackdrop}
-						className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 mb-[97px]"
+						className="flex items-start mt-12 justify-center min-h-screen px-4 pb-20 text-center sm:block sm:p-0 mb-[97px]"
 					>
 						<span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>
 						<div
