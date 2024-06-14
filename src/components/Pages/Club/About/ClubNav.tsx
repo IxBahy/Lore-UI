@@ -5,7 +5,7 @@ const ClubNav = ({ slug, isMember }: { slug: string; isMember: boolean }) => {
 	const pathName = location.pathname.split("/");
 	const lastNameInPath = pathName.pop();
 	return (
-		<nav className="flex flex-col z-50 sticky top-0 items-center px-16  w-full text-xl leading-6 whitespace-nowrap bg-slate-100 text-neutral-800 max-md:px-5 max-md:max-w-full">
+		<nav className="flex flex-col z-20 sticky top-0 items-center px-16  w-full text-xl leading-6 whitespace-nowrap bg-slate-100 text-neutral-800 max-md:px-5 max-md:max-w-full">
 			<div className="flex flex-col max-w-full w-[597px]">
 				<div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
 					<Link
