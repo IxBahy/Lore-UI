@@ -20,6 +20,8 @@ import { ProfileProgressPage } from "./pages/ProfileProgressPage";
 import { ProfileFriendsPage } from "./pages/ProfileFriendsPage";
 import { StudentLayout } from "./layouts/StudentLayout";
 import { StudentProfilePage } from "./pages/StudentProfilePage";
+import ChatPage from "./pages/ChatPage";
+import ChatLayout from "./layouts/ChatLayout";
 function App() {
 	const router = createBrowserRouter([
 		{
@@ -33,6 +35,14 @@ function App() {
 				{
 					path: "/about",
 					element: <AboutPage />,
+				},
+				{
+					path: "/chat",
+					element: <ChatLayout />,
+					children: [
+						{ path: "", element: <ChatPage /> },
+						{ path: "/chat/:slug", element: <></> },
+					],
 				},
 				{
 					path: "/club/",

@@ -115,3 +115,5 @@ type RoadmapWeekProgress = {
 };
 
 type RoadmapProgress = RoadmapWeekProgress[];
+
+type Message = { role: "system" | "user"; content: string };
