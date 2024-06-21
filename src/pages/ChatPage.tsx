@@ -4,7 +4,9 @@ import React from "react";
 const ChatPage = () => {
 	return (
 		<>
-			<ChatPlaceholder />
+			<div>
+				<ChatPlaceholder />
+			</div>
 		</>
 	);
 };

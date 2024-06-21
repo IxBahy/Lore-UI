@@ -1,6 +1,8 @@
+import { getChats, getFriends, getStudentClubs } from "@/apis/student";
 import ChatView from "@/components/Chat/ChatView";
-import React from "react";
-import { Outlet } from "react-router-dom";
+import { JwtPayload, jwtDecode } from "jwt-decode";
+import React, { useEffect, useState } from "react";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 
 type ChatViewProps = {
 	notificationCount?: number;
@@ -11,6 +13,34 @@ type ChatViewProps = {
 	alt: string;
 };
 const ChatLayout = () => {
+	const token = localStorage.getItem("access_token") ?? "";
+
+	const navigate = useNavigate();
+	if (!token) {
+		navigate("/login");
+	}
+	const decoded = jwtDecode<
+		JwtPayload & { user_id: number; username: string; type: string }
+	>(token);
+	const slug = useParams()["slug"];
+	const [currentChat, setCurrentChat] = useState<string>();
+	const [friends, setFriends] = useState<Chat[]>([]);
+	const [clubs, setClubs] = useState<Chat[]>([]);
+	useEffect(() => {
+		if (slug) {
+			setCurrentChat(slug);
+		}
+		const fetchDetails = async () => {
+			const chats = await getChats();
+			const clubsData = chats.filter((chat) => chat.is_channel);
+			const friendsData = chats.filter((chat) => !chat.is_channel);
+			setClubs(clubsData);
+			setFriends(friendsData);
+		};
+		fetchDetails();
+	}, []);
+	console.log(currentChat);
+
 	return (
 		<main className="grid grid-cols-3  w-full  px-16 py-px mt-16 max-w-full text-base font-bold leading-5 text-orange-300  max-md:mt-10">
 			<div className="col-span-1">
@@ -30,40 +60,16 @@ const ChatLayout = () => {
 					<section className="flex flex-col px-6 py-11 mt-3.5 w-full bg-white rounded-3xl border shadow-md max-md:pl-5 max-md:max-w-full">
 						<div className="flex gap-5 justify-between max-md:flex-wrap max-md:max-w-full">
 							<div className="flex flex-col whitespace-nowrap">
-								<h2 className="text-2xl font-bold text-neutral-800">Groups</h2>
-								<ChatView
-									id={"2"}
-									imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/b372dc7bead4609b0dee49cae20e0583cbe5a293419e87d7696e63489f7c7d44?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-									name="Robert"
-									message="Hahahahah!"
-									time="Today, 9.52pm"
-									alt="Robert's image"
-								/>
-								<ChatView
-									id={"2"}
-									imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/00b0780283d42bb28a70b06e2cebbf88b152ef2e105dc6b71524f5c9c67d1158?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-									name="Jenny"
-									message="Hahahahah!"
-									time="Yesterday, 12.31pm"
-									alt="Jenny's image"
-									notificationCount={1}
-								/>
-								<ChatView
-									id={"2"}
-									imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/3389b0af6688375867f8584efd0eb047fc61cedb757a6e9d9e12cf9b6cdb9658?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-									name="Jon"
-									message="That's a good idea. I'll have to try that. So..."
-									time="Wednesday, 9.12am"
-									alt="Jon's image"
-								/>
-								<ChatView
-									id={"2"}
-									imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/f354f8f04fcb105f1f6239e5494e1daadb222ee4780c169f5c7f9ced7c09bcf9?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-									name="Bessie"
-									message="That's a good idea. I'll have to try that. So..."
-									time="Wednesday, 9.12am"
-									alt="Bessie's image"
-								/>
+								<h2 className="text-2xl font-bold text-neutral-800">Clubs</h2>
+								{clubs.map((club) => (
+									<ChatView
+										key={club.id}
+										id={club.id}
+										img_url={club.img_url}
+										name={`${club.name}`}
+										is_channel={club.is_channel}
+									/>
+								))}
 							</div>
 						</div>
 					</section>
@@ -71,45 +77,21 @@ const ChatLayout = () => {
 						<div className="flex gap-5 justify-between max-md:flex-wrap w-full  ">
 							<div className="flex flex-col whitespace-nowrap w-full  ">
 								<h2 className="text-2xl font-bold text-neutral-800">People</h2>
-								<ChatView
-									id={"2"}
-									imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/b372dc7bead4609b0dee49cae20e0583cbe5a293419e87d7696e63489f7c7d44?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-									name="Robert"
-									message="Hahahahah!"
-									time="Today, 9.52pm"
-									alt="Robert's image"
-								/>
-								<ChatView
-									id={"2"}
-									imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/00b0780283d42bb28a70b06e2cebbf88b152ef2e105dc6b71524f5c9c67d1158?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-									name="Jenny"
-									message="Hahahahah!"
-									time="Yesterday, 12.31pm"
-									alt="Jenny's image"
-									notificationCount={1}
-								/>
-								<ChatView
-									id={"2"}
-									imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/3389b0af6688375867f8584efd0eb047fc61cedb757a6e9d9e12cf9b6cdb9658?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-									name="Jon"
-									message="That's a good idea. I'll have to try that. So..."
-									time="Wednesday, 9.12am"
-									alt="Jon's image"
-								/>
-								<ChatView
-									id={"2"}
-									imgSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/f354f8f04fcb105f1f6239e5494e1daadb222ee4780c169f5c7f9ced7c09bcf9?apiKey=ffbac9baaace46a9ab45d6e0b9f2c125&"
-									name="Bessie"
-									message="That's a good idea. I'll have to try that. So..."
-									time="Wednesday, 9.12am"
-									alt="Bessie's image"
-								/>
+								{friends.map((friend) => (
+									<ChatView
+										key={friend.id}
+										id={friend.id}
+										img_url={friend.img_url}
+										name={`${friend.name}`}
+										is_channel={friend.is_channel}
+									/>
+								))}
 							</div>
 						</div>
 					</section>
 				</div>
 			</div>
-			<div className="col-span-2 flex flex-col justify-center items-center">
+			<div className="col-span-2 flex flex-col justify-center items-center w-full">
 				<Outlet />
 			</div>
 		</main>

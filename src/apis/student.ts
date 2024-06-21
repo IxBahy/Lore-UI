@@ -202,3 +202,21 @@ export const deleteWeekToInCompleted = async (
 	}
 	return res.json();
 };
+
+export const getChats = async (): Promise<Chat[]> => {
+	const token =
+		typeof window !== "undefined" ? localStorage.getItem("access_token") : "";
+	const res = await fetch(baseUrl + `chats`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${token}`,
+		},
+	});
+	if (res.status === 401) {
+		removeTokens();
+	}
+	return res.json();
+};
+
+// metapix --> keutaben

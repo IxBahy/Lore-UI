@@ -32,7 +32,7 @@ const ChatPlaceholder: React.FC = () => {
 		</section>
 	);
 	return (
-		<main className="flex flex-col border items-center self-end py-20  mr-32 max-w-full bg-white rounded-3xl shadow-md leading-[120%] w-[717px] max-md:mr-2.5">
+		<main className="flex flex-col border items-center self-end py-20  mr-32 max-w-full bg-white rounded-3xl shadow-md leading-[120%] w-full max-md:mr-2.5">
 			<img
 				src={placeholderImage}
 				alt="Decorative Image"

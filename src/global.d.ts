@@ -117,3 +117,31 @@ type RoadmapWeekProgress = {
 type RoadmapProgress = RoadmapWeekProgress[];
 
 type Message = { role: "system" | "user"; content: string };
+
+type Chat = {
+	id: number;
+	name: string;
+	img_url: string;
+	is_channel: boolean;
+	admin?: Owner;
+};
+
+type ChatMessage = {
+	id: number;
+	content: string;
+	sender_id: {
+		id: number;
+		username: string;
+		img_url: string;
+	};
+	created_at: string; // ISO 8601 date string
+};
+
+type ChatDetails = {
+	type: string;
+	name: string;
+	img_url: string;
+	is_channel: boolean;
+	admin: number;
+	messages: ChatMessage[];
+};

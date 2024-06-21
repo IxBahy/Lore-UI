@@ -22,6 +22,8 @@ import { StudentLayout } from "./layouts/StudentLayout";
 import { StudentProfilePage } from "./pages/StudentProfilePage";
 import ChatPage from "./pages/ChatPage";
 import ChatLayout from "./layouts/ChatLayout";
+import UserChat from "./pages/UserChat";
+import ClubChat from "./pages/ClubChat";
 function App() {
 	const router = createBrowserRouter([
 		{
@@ -41,7 +43,8 @@ function App() {
 					element: <ChatLayout />,
 					children: [
 						{ path: "", element: <ChatPage /> },
-						{ path: "/chat/:slug", element: <></> },
+						{ path: "/chat/:slug", element: <UserChat /> },
+						{ path: "/chat/club/:slug", element: <ClubChat /> },
 					],
 				},
 				{
